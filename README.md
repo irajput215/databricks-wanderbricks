@@ -32,9 +32,11 @@ and the dev log):** the AWS GSOD bucket stores US units (°F/inches/knots) in
 `schemaEvolutionMode=none` on schema changes); Unity Catalog models need
 signatures and use aliases instead of stages.
 
-**Next steps:** enable the serving endpoint (rename
-`resources/wanderbricks_serving.endpoint.yml.example` → `.yml`, deploy, test with
-`notebooks/04_test_serving`), promote to prod, add the retraining-on-drift task,
+**Serving endpoint: LIVE** — `wanderbricks_weather_serve` is deployed and tested
+(`{"predictions": [23.86]}`). Dev mode prefixes resource names (`dev_<user>_`), so
+the endpoint is `dev_iraonfridays_wanderbricks-weather-serve` in dev and
+`wanderbricks-weather-serve` in prod — `notebooks/04_test_serving` has the dev
+name as default. Remaining: promote to prod, add the retraining-on-drift task,
 and optionally wire Datadog.
 
 ---

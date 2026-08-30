@@ -192,3 +192,14 @@ decision → why**. The timeline of what happened is in
   registration; score loads `models:/catalog.schema.name@Production`.
 - **Why:** hard platform requirements (verified by failed runs); aliases are
   the UC-native promotion mechanism and work with the serving endpoint config.
+
+## D17 · Dev-mode resource naming: the `dev_<user>_` prefix
+
+- **Date:** 2026-08-30
+- **Context:** The test notebook called `wanderbricks-weather-serve`; the
+  deployed dev endpoint is `dev_iraonfridays_wanderbricks-weather-serve`.
+- **Decision:** document the prefix (README + notebook) and default the
+  notebook widget to the dev name; prod uses the unprefixed name.
+- **Why:** dev-mode prefixing is a Databricks safety feature (isolated dev
+  copies); the notebook now works as-shipped in dev and needs one widget
+  change for prod.

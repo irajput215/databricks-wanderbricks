@@ -118,3 +118,14 @@ RESULT: full job run SUCCESS — Prophet baseline, XGBoost registered as
 `workspace.iraonfridays.wanderbricks_weather_xgb@Production`, and
 **11,329 station forecasts scored in 0.0491s** (recorded in
 `scoring_metrics`). First complete end-to-end run of the project.
+
+### 13 · Serving endpoint ENABLED and tested
+The model existed (v1 + @Production alias), so the endpoint resource was
+enabled: `git mv resources/wanderbricks_serving.endpoint.yml.example → .yml`,
+`bundle deploy` → `model_serving_endpoints.wanderbricks_weather_serve` created.
+Discovered dev-mode naming: resources get a `dev_<user>_` prefix, so the
+endpoint is `dev_iraonfridays_wanderbricks-weather-serve` (prod:
+`wanderbricks-weather-serve`). Tested live via curl with a feature-row payload:
+`{"predictions": [23.86]}`. Updated `notebooks/04_test_serving` (endpoint
+default + dev-name note) and re-imported to the workspace. Captain's earlier
+`404 ENDPOINT_NOT_FOUND` was the endpoint not being deployed yet.

@@ -157,28 +157,9 @@ deploy, pipeline, job, notebooks), the serving endpoint curl with `data.json`
 payload, structure, monitoring, and next steps; cross-references updated
 (docs/, INFORMATION.md self-refs). `data.json` added for the curl example.
 
-### 17 · Streamlit showcase app (live endpoint demo)
-Built `app.py`: a single-file Streamlit dashboard hitting the live serving
-endpoint — station picker backed by REAL `weather_features` rows (via
-Databricks Connect, fallback to the `data.json` sample), measured latency
-badge, and observed-vs-forecast Plotly chart. Verified locally: real station
-01001499999 → HTTP 200, 12.36 °C; warm-path round-trip ~1 s, cold start
-(scale-to-zero) ~42 s. `uv add streamlit`. Runs locally or on Streamlit
-Community Cloud via env secrets (DATABRICKS_HOST/DATABRICKS_TOKEN/ENDPOINT_NAME).
-
 ### 18 · Portfolio & interview guide
 Created `docs/portfolio.md`: verified-facts table (11,329 stations; 11,329
 forecasts in 0.0491 s; warm ~1 s / cold ~42 s), corrected resume bullets
 (MLOps + Data Engineering), a truthful LinkedIn post, interview prep built on
 the six-fix debugging saga, an explicit do-not-claim list, and demo tips.
 Every claim traceable to a real run in this repo.
-
-### 19 · Streamlit v2: station names + coords, geospatial map, in-app monitoring
-Captain feedback: show station names + lat/lon, add a geospatial map, and put
-model monitoring in the app. Restructured data loading (per-station metadata
-+ latest features only, not full history — faster first load), station picker
-now shows name + coordinates, added a Plotly Scattergeo map (click-to-select,
-colored by latest temp), and a monitoring section: scoring_metrics table +
-inference-time trend + recent MLflow runs (databricks://irajput tracking URI).
-Verified: 11,291 stations with coords; scoring_metrics 1 row (0.0491 s);
-9 MLflow runs. 

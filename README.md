@@ -13,6 +13,30 @@ makes sense), then lays out the project step by step.
 > [`docs/development-log.md`](docs/development-log.md) and the decision records
 > (why each choice was made) in [`docs/decisions.md`](docs/decisions.md).
 
+## Project status — first full end-to-end run: SUCCESS ✅
+
+Live in the dev workspace (`dbc-2944edfb-cd25.cloud.databricks.com`), against
+real NOAA GSOD 2025 data:
+
+| Stage | Result |
+| --- | --- |
+| DLT pipeline (bronze → silver → gold) | ✅ three flows, real °C data |
+| Prophet baseline | ✅ MLflow-tracked |
+| XGBoost train | ✅ registered `wanderbricks_weather_xgb` v1 → `@Production` |
+| Batch scoring | ✅ **11,329 station forecasts in 0.0491 s** |
+| Monitoring | ✅ `scoring_metrics` (run_date, rows, inference_seconds) |
+
+**What it took (the real-world lessons, recorded in `docs/decisions.md` D14–D16
+and the dev log):** the AWS GSOD bucket stores US units (°F/inches/knots) in
+`<year>/<station>.csv` layout; Auto Loader schema state is sticky (fresh path +
+`schemaEvolutionMode=none` on schema changes); Unity Catalog models need
+signatures and use aliases instead of stages.
+
+**Next steps:** enable the serving endpoint (rename
+`resources/wanderbricks_serving.endpoint.yml.example` → `.yml`, deploy, test with
+`notebooks/04_test_serving`), promote to prod, add the retraining-on-drift task,
+and optionally wire Datadog.
+
 ---
 
 ## Part 1 — Databricks feature tour (with examples)

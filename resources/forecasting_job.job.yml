@@ -17,18 +17,20 @@ resources:
         on_failure:
           - iraonfridays@gmail.com
 
-      job_clusters:
-        - job_cluster_key: forecast_ml
-          new_cluster:
-            spark_version: "15.4.x-ml-scala2.12"   # ML Runtime: includes MLflow, Prophet, XGBoost
-            node_type_id: "i3.xlarge"              # adjust to your workspace's available node types
-            num_workers: 2
-            spark_conf:
-              spark.databricks.delta.preview.enabled: "true"
+      # Serverless-only workspace: no job_clusters. Python tasks run on
+      # serverless compute with an environment spec for dependencies.
+      environments:
+        - environment_key: forecast_ml
+          spec:
+            environment_version: "4"
+            dependencies:
+              - prophet
+              - xgboost
+              - scikit-learn
 
       tasks:
         - task_key: ingest
-          job_cluster_key: forecast_ml
+          environment_key: forecast_ml
           spark_python_task:
             python_file: ../pipelines/01_ingest.py
 
@@ -39,21 +41,21 @@ resources:
             pipeline_id: ${resources.pipelines.forecasting_pipeline.id}
 
         - task_key: baseline
-          job_cluster_key: forecast_ml
+          environment_key: forecast_ml
           depends_on:
             - task_key: dlt_pipeline
           spark_python_task:
             python_file: ../ml/04_baseline.py
 
         - task_key: train
-          job_cluster_key: forecast_ml
+          environment_key: forecast_ml
           depends_on:
             - task_key: dlt_pipeline
           spark_python_task:
             python_file: ../ml/05_train_xgb.py
 
         - task_key: score
-          job_cluster_key: forecast_ml
+          environment_key: forecast_ml
           depends_on:
             - task_key: train
           spark_python_task:

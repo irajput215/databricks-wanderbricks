@@ -203,3 +203,16 @@ decision → why**. The timeline of what happened is in
 - **Why:** dev-mode prefixing is a Databricks safety feature (isolated dev
   copies); the notebook now works as-shipped in dev and needs one widget
   change for prod.
+
+## D18 · Streamlit showcase app + honest latency framing
+
+- **Date:** 2026-08-30
+- **Context:** Captain's roadmap proposed a Streamlit UI and claimed
+  "<50 ms latency" for the serving endpoint.
+- **Decision:** built `app.py` (real feature rows via Connect, real endpoint
+  call, measured latency displayed) and corrected the latency claim: measured
+  warm round-trip ~1 s, cold start ~42 s with scale-to-zero. The UI shows the
+  measured number, not an aspirational one.
+- **Why:** the project's credibility comes from the REAL numbers (11,329
+  forecasts in 0.049 s batch; live endpoint; real data). A claim that doesn't
+  survive an interview or a dashboard reading is a liability, not a feature.

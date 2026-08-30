@@ -148,3 +148,12 @@ default)` helper in the bootstrap (try workspace widgets, fall back to the
 default) plus a `display()` fallback for local mode. All four notebooks
 converted; notebook 01 executed locally end-to-end via nbconvert (Connect
 session, tables found, top-station picked). Re-imported to the workspace.
+
+### 17 · Streamlit showcase app (live endpoint demo)
+Built `app.py`: a single-file Streamlit dashboard hitting the live serving
+endpoint — station picker backed by REAL `weather_features` rows (via
+Databricks Connect, fallback to the `data.json` sample), measured latency
+badge, and observed-vs-forecast Plotly chart. Verified locally: real station
+01001499999 → HTTP 200, 12.36 °C; warm-path round-trip ~1 s, cold start
+(scale-to-zero) ~42 s. `uv add streamlit`. Runs locally or on Streamlit
+Community Cloud via env secrets (DATABRICKS_HOST/DATABRICKS_TOKEN/ENDPOINT_NAME).

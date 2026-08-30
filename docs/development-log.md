@@ -17,9 +17,9 @@ and chose **time-series forecasting** as the problem. Learning goals named:
 DLT, data-quality/monitoring, MLflow, orchestration, retraining — preferably
 Databricks-native, with Airflow/Datadog optional alongside.
 
-### 02 · Repo created + teaching README
+### 02 · Repo created + teaching INFORMATION.md
 Created `~/databricks-forecasting/` (captain-specified location, git initialized
-on `main`). Wrote a teaching README: Part 1 = Databricks feature tour (14
+on `main`). Wrote a teaching INFORMATION.md: Part 1 = Databricks feature tour (14
 features with examples), Part 2 = the end-to-end forecasting procedure.
 Committed `8165cde`.
 
@@ -41,7 +41,7 @@ scikit-learn as dependencies). Committed `1405809`. Deployed successfully:
 ### 05 · Rename: forecasting → Wanderbricks
 Captain renamed the project to **Wanderbricks** (matches GitHub repo
 `databricks-wanderbricks`). Destroyed old-named resources, renamed bundle/job/
-pipeline/README/pyproject, redeployed under `wanderbricks`. Committed `de2a53c`.
+pipeline/INFORMATION.md/pyproject, redeployed under `wanderbricks`. Committed `de2a53c`.
 
 ### 06 · Real dataset: NOAA GSOD wired end to end
 Captain proposed NOAA GSOD (`s3://noaa-gsod-pds/`, daily weather, 1929–now)
@@ -138,7 +138,7 @@ live Spark 4.2.0; `WorkspaceClient(...).dbutils` emulates widgets/fs (note:
 Public DBFS root is disabled on this workspace, so `/` ls fails — use
 `/Volumes/...`). Baked the bootstrap into all four notebooks (widgets fallback,
 and a local token fallback for 04_test_serving via the CLI token cache),
-re-imported to the workspace, documented in README.
+re-imported to the workspace, documented in README + INFORMATION.md.
 
 ### 15 · Notebook widget errors on local runs — hardened
 Captain hit `dbutils.widgets` errors running notebook 01 locally. Root cause:
@@ -148,3 +148,11 @@ default)` helper in the bootstrap (try workspace widgets, fall back to the
 default) plus a `display()` fallback for local mode. All four notebooks
 converted; notebook 01 executed locally end-to-end via nbconvert (Connect
 session, tables found, top-station picked). Re-imported to the workspace.
+
+### 16 · Docs restructure: README → INFORMATION.md + new README
+Captain asked to convert the teaching README into INFORMATION.md and write a
+proper project README. Done: `git mv README.md INFORMATION.md` (the feature
+tour + procedure); new README.md = status, architecture, quickstart (CLI, uv,
+deploy, pipeline, job, notebooks), the serving endpoint curl with `data.json`
+payload, structure, monitoring, and next steps; cross-references updated
+(docs/, INFORMATION.md self-refs). `data.json` added for the curl example.

@@ -9,6 +9,10 @@ Datadog for observability — with a retraining loop so the model stays fresh.
 This README teaches the platform first (so every feature later in the procedure
 makes sense), then lays out the project step by step.
 
+> **Docs:** the running development timeline lives in
+> [`docs/development-log.md`](docs/development-log.md) and the decision records
+> (why each choice was made) in [`docs/decisions.md`](docs/decisions.md).
+
 ---
 
 ## Part 1 — Databricks feature tour (with examples)

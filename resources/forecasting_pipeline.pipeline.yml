@@ -1,0 +1,22 @@
+# Delta Live Tables pipeline: bronze -> silver -> gold for forecasting.
+# Runs 02_clean.py (silver, with quality expectations) and 03_features.py (gold).
+# See README Part 2, steps 2-3.
+
+resources:
+  pipelines:
+    forecasting_pipeline:
+      name: forecasting-pipeline
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      root_path: "../pipelines"
+
+      libraries:
+        - glob:
+            include: ../pipelines/02_clean.py
+        - glob:
+            include: ../pipelines/03_features.py
+
+      # NOTE: the pipeline modules currently reference table names like
+      # dev.silver.* / dev.gold.* with TODO markers; parameterize them to
+      # ${var.catalog}/${var.schema} once the raw schema is known.

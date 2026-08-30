@@ -1,4 +1,4 @@
-# Databricks End-to-End Forecasting Project
+# Wanderbricks — Databricks End-to-End Forecasting Project
 
 An end-to-end **data + ML/AI engineering** project on Databricks for **time-series
 forecasting**, built the modern way: project-as-code with the Databricks CLI,
@@ -161,7 +161,7 @@ Databricks' native ML lifecycle tool (it IS the company that created MLflow).
 ```python
 import mlflow
 
-mlflow.set_experiment("/Users/you/forecasting")
+mlflow.set_experiment("/Users/you/wanderbricks")
 with mlflow.start_run():
     mlflow.log_param("model", "xgboost")
     mlflow.log_param("lags", 14)
@@ -219,8 +219,8 @@ declared in the bundle.
 ```yaml
 resources:
   jobs:
-    forecasting_pipeline:
-      name: forecasting-pipeline
+    wanderbricks_pipeline:
+      name: wanderbricks-pipeline
       schedule: { quartz_cron_expression: "0 0 6 * * ?", timezone_id: UTC }
       tasks:
         - task_key: ingest          # notebook or .py
@@ -271,7 +271,7 @@ databricks auth login --host https://<workspace>.cloud.databricks.com
 databricks bundle init --template default-dlt   # scaffold from a template
 databricks bundle validate --target dev
 databricks bundle deploy --target dev
-databricks bundle run forecasting_pipeline --refresh-all
+databricks bundle run wanderbricks_pipeline --refresh-all
 databricks bundle destroy --target dev          # teardown
 ```
 
@@ -320,7 +320,7 @@ dev.gold.forecast_features  ── date-based feature table (Feature Store)
 ### Folder layout (this repo)
 
 ```
-databricks-forecasting/
+wanderbricks/
 ├── README.md                 ← you are here
 ├── databricks.yml            ← bundle: targets, jobs, pipelines, serving
 ├── pipelines/

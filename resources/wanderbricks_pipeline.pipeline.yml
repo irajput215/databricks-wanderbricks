@@ -4,8 +4,8 @@
 
 resources:
   pipelines:
-    forecasting_pipeline:
-      name: forecasting-pipeline
+    wanderbricks_pipeline:
+      name: wanderbricks-pipeline
       catalog: ${var.catalog}
       schema: ${var.schema}
       serverless: true

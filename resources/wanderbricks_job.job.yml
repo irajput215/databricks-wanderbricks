@@ -1,11 +1,11 @@
-# The end-to-end daily forecasting job:
+# The end-to-end daily Wanderbricks job:
 #   ingest -> DLT pipeline (clean + features) -> baseline -> train -> score
 # See README Part 2, steps 8 and 10 (orchestration + retraining loop).
 
 resources:
   jobs:
-    forecasting_job:
-      name: forecasting-job
+    wanderbricks_job:
+      name: wanderbricks-job
 
       trigger:
         # Run every day; see https://docs.databricks.com/api/workspace/jobs/create#trigger
@@ -38,7 +38,7 @@ resources:
           depends_on:
             - task_key: ingest
           pipeline_task:
-            pipeline_id: ${resources.pipelines.forecasting_pipeline.id}
+            pipeline_id: ${resources.pipelines.wanderbricks_pipeline.id}
 
         - task_key: baseline
           environment_key: forecast_ml

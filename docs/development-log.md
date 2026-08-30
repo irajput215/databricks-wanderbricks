@@ -139,3 +139,12 @@ Public DBFS root is disabled on this workspace, so `/` ls fails — use
 `/Volumes/...`). Baked the bootstrap into all four notebooks (widgets fallback,
 and a local token fallback for 04_test_serving via the CLI token cache),
 re-imported to the workspace, documented in README.
+
+### 15 · Notebook widget errors on local runs — hardened
+Captain hit `dbutils.widgets` errors running notebook 01 locally. Root cause:
+cells called `dbutils.widgets.*` directly (workspace-native only); the SDK
+emulation is version-dependent. Fix: a single guarded `_get_widget(name,
+default)` helper in the bootstrap (try workspace widgets, fall back to the
+default) plus a `display()` fallback for local mode. All four notebooks
+converted; notebook 01 executed locally end-to-end via nbconvert (Connect
+session, tables found, top-station picked). Re-imported to the workspace.

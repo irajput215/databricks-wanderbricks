@@ -112,3 +112,20 @@ decision → why**. The timeline of what happened is in
 - **Why:** deterministic parsing beats inference on gzipped files; cleaning in
   the silver layer keeps raw bronze append-only (the medallion principle) and
   makes the sentinel/unit conventions explicit and testable.
+
+## D11 · Exploration notebooks: git-tracked source + workspace import
+
+- **Date:** 2026-08-30
+- **Context:** Captain wanted notebooks to explore the data, make changes, and
+  experiment freely.
+- **Options considered:** (a) notebooks only in the workspace (not in git),
+  (b) git-tracked `.ipynb` in the bundle, (c) git-tracked + imported to a
+  friendly workspace folder.
+- **Decision:** (c) — `.ipynb` files live in `notebooks/` (git + bundle
+  deploy), and `databricks workspace import` pushes working copies to
+  `/Users/<you>/wanderbricks/notebooks/`.
+- **Why:** interactive experiments shouldn't live only in a scratch workspace
+  (lost on teardown, invisible to the repo), but a buried bundle-files path is
+  painful to open in the UI. Git = source of truth + reviewable; workspace
+  import = one command to refresh the interactive copies. Table names are
+  parameterized through widgets so the same notebooks work across dev/prod.

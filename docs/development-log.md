@@ -62,3 +62,12 @@ Committed `a31e5d4`. Validated + deployed (both resources updated).
 Captain asked for a docs folder explaining steps and decision thought
 process. Created `docs/development-log.md` (this file) +
 `docs/decisions.md` (ADR-style rationale), backfilled with the above.
+
+### 08 · Exploration notebooks
+Captain asked for notebooks to explore data and experiment. Generated three
+git-tracked `.ipynb` files with `nbformat` (uv venv): bronze/silver explorer,
+gold-features explorer (nulls + correlation + plots), and a quick-forecast lab
+(Prophet + XGBoost trials mirroring `ml/`). Deployed via the bundle and
+imported into the workspace at
+`/Users/iraonfridays@gmail.com/wanderbricks/notebooks/` for direct interactive
+use. Committed `9a92d...` (see git log).

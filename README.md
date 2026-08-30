@@ -569,3 +569,34 @@ curl -X POST \
 
 Expected: `{"predictions": [<temperature °C>]}`. The workspace UI also has a
 built-in **Query endpoint** playground on the endpoint page.
+
+---
+
+## Running the notebooks locally (Databricks Connect + SDK)
+
+Every notebook in `notebooks/` now boots in **two modes** — the Databricks
+workspace (native `spark`/`dbutils`) or your laptop:
+
+```python
+# first cell of each notebook — workspace OR local
+try: spark
+except NameError:
+    from databricks.connect import DatabricksSession
+    spark = DatabricksSession.builder.profile("irajput").serverless().getOrCreate()
+
+try: dbutils
+except NameError:
+    from databricks.sdk import WorkspaceClient
+    dbutils = WorkspaceClient(profile="irajput").dbutils
+```
+
+Verified locally: `WorkspaceClient(profile="irajput")` authenticates and
+`DatabricksSession...serverless()` returns a live Spark (v4.2.0). Widgets fall
+back to plain variables if neither surface provides them. `04_test_serving`
+also falls back to the CLI token cache locally.
+
+Notes:
+- Uses your `[irajput]` profile in `~/.databrickscfg`.
+- `dbutils.fs.ls("/")` fails on this workspace — **Public DBFS root is
+  disabled**; use `/Volumes/...` paths instead.
+- Local runs spin serverless compute (small credit cost, like the job runs).

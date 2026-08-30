@@ -129,3 +129,13 @@ endpoint is `dev_iraonfridays_wanderbricks-weather-serve` (prod:
 `{"predictions": [23.86]}`. Updated `notebooks/04_test_serving` (endpoint
 default + dev-name note) and re-imported to the workspace. Captain's earlier
 `404 ENDPOINT_NOT_FOUND` was the endpoint not being deployed yet.
+
+### 14 · Notebooks now run locally too (Databricks Connect + SDK)
+Captain researched the dual-mode pattern (DatabricksSession via
+databricks-connect, dbutils via WorkspaceClient). Verified on this machine:
+profile `[irajput]` authenticates; `DatabricksSession...serverless()` returns a
+live Spark 4.2.0; `WorkspaceClient(...).dbutils` emulates widgets/fs (note:
+Public DBFS root is disabled on this workspace, so `/` ls fails — use
+`/Volumes/...`). Baked the bootstrap into all four notebooks (widgets fallback,
+and a local token fallback for 04_test_serving via the CLI token cache),
+re-imported to the workspace, documented in README.

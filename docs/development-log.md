@@ -156,3 +156,10 @@ tour + procedure); new README.md = status, architecture, quickstart (CLI, uv,
 deploy, pipeline, job, notebooks), the serving endpoint curl with `data.json`
 payload, structure, monitoring, and next steps; cross-references updated
 (docs/, INFORMATION.md self-refs). `data.json` added for the curl example.
+
+### 18 · Portfolio & interview guide
+Created `docs/portfolio.md`: verified-facts table (11,329 stations; 11,329
+forecasts in 0.0491 s; warm ~1 s / cold ~42 s), corrected resume bullets
+(MLOps + Data Engineering), a truthful LinkedIn post, interview prep built on
+the six-fix debugging saga, an explicit do-not-claim list, and demo tips.
+Every claim traceable to a real run in this repo.

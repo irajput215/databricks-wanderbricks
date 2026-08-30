@@ -1,0 +1,159 @@
+# Wanderbricks — Decision Records
+
+ADR-style records of the choices made on this project: **context → options →
+decision → why**. The timeline of what happened is in
+[development-log.md](development-log.md).
+
+---
+
+## D2 · Project location: `~/databricks-forecasting` (outside the fleet registry)
+
+- **Date:** 2026-08-30
+- **Context:** Captain explicitly asked for a new folder at `~` with git
+  initialized, rather than the fleet's standard `projects/` location.
+- **Decision:** follow the captain's explicit location; keep it out of the
+  fleet registry as a personal learning project.
+- **Why:** explicit captain instruction wins over convention; the fleet
+  machinery is for managed clones. If it ever needs fleet-managed workers, it
+  can be cloned into the registry then.
+
+## D3 · Teaching README before code
+
+- **Date:** 2026-08-30
+- **Context:** Captain asked to "teach me every feature of Databricks with
+  examples" before the procedure.
+- **Decision:** the README is a full platform tour + project procedure, written
+  first, and later extended (Part 3: GSOD) as the project grew.
+- **Why:** the captain is learning the platform; a doc-first project makes every
+  later step self-explanatory and keeps a single source of truth.
+
+## D4 · Project-as-code with Databricks Asset Bundles
+
+- **Date:** 2026-08-30
+- **Context:** Modern Databricks supports notebooks, direct job creation, and
+  Declarative Automation Bundles (`databricks.yml` + CLI).
+- **Decision:** bundles as the delivery layer: one config file declares the DLT
+  pipeline, the daily job, and targets (dev/prod); everything is version
+  controlled and CI/CD-ready.
+- **Why:** matches the captain's "end-to-end engineering" goal (git, validation,
+  deploy/destroy), enables dev/prod separation, and is the documented modern
+  path (CLI ≥ 0.218+).
+
+## D5 · Serverless compute (constraint discovered at deploy, not chosen)
+
+- **Date:** 2026-08-30
+- **Context:** First deploy of the job with a classic ML cluster was rejected:
+  `Only serverless compute is supported in the workspace.`
+- **Decision:** job tasks run on serverless compute with an `environment_key`
+  spec (prophet, xgboost, scikit-learn); no job clusters.
+- **Why:** it was a hard workspace constraint, not a preference. Serverless is
+  also simpler operationally (no cluster management) — a durable fact about
+  this workspace that shapes every future resource.
+
+## D6 · Triggered (batch) DLT pipeline, not continuous streaming
+
+- **Date:** 2026-08-30
+- **Context:** The captain's blueprint included a continuous 24/7 streaming
+  design (watermarks, 5-minute windows, sub-second serving).
+- **Decision:** the DLT pipeline runs **triggered** on the daily schedule;
+  `continuous: true` is documented but off.
+- **Why:** the dataset is **daily** GSOD updates with 1–2 day freshness.
+  Continuous mode keeps serverless compute running around the clock for no
+  freshness benefit. The streaming-read primitives (Auto Loader `readStream`,
+  DLT streaming tables) are identical either way, so flipping to continuous
+  later is a one-line change — the decision is reversible at low cost.
+
+## D7 · DLT owns the whole bronze → gold layer; the job only does ML
+
+- **Date:** 2026-08-30
+- **Context:** The original job had a standalone `ingest` task running
+  `01_ingest.py`, with DLT only for silver/gold.
+- **Decision:** move ingestion into the DLT pipeline (bronze streaming table)
+  and remove the standalone task; the job chain is now
+  `dlt_pipeline → baseline → train → score`.
+- **Why:** one declarative owner for the data layer — DLT manages checkpoints,
+  streaming tables, and quality in one pipeline; the job becomes purely the ML
+  orchestration. Fewer moving parts, and bronze/silver/gold land in the same
+  catalog/schema via pipeline config.
+
+## D8 · Gold features as a materialized view, not a streaming table
+
+- **Date:** 2026-08-30
+- **Context:** Lag/rolling window functions (`F.lag`, `avg over rowsBetween`)
+  are not legal on a streaming read.
+- **Decision:** `weather_features` reads `gsod_silver` with `dlt.read` (batch),
+  making it a materialized view recomputed each pipeline run.
+- **Why:** per-station daily features need whole-series window functions;
+  Spark Structured Streaming forbids them on streams. An MV is exactly the
+  right primitive for "recompute the feature table when new data lands". The
+  real-time variant (window/groupBy aggregation) is documented for the
+  continuous future.
+
+## D9 · NOAA GSOD as the dataset
+
+- **Date:** 2026-08-30
+- **Context:** Captain asked to wire a real dataset from S3; the plan proposed
+  NOAA GSOD.
+- **Decision:** use `s3://noaa-gsod-pds/` (daily weather, 9000+ stations,
+  1929–present, public bucket).
+- **Why:** daily granularity matches the Prophet/lag-XGBoost design; decades of
+  history support training; it's publicly readable from serverless for admins;
+  and the 1–2 day freshness is fine for a daily pipeline. Scoped to one recent
+  year initially to validate cheaply, widenable to full history.
+
+## D10 · Explicit GSOD schema + sentinel handling in the pipeline
+
+- **Date:** 2026-08-30
+- **Context:** GSOD files are gzipped per-station-per-year CSVs with values in
+  tenths and numeric sentinels for missing data.
+- **Decision:** explicit schema in `01_ingest.py` (matched by name, subset of
+  columns), unit conversion + sentinel → NULL in `02_clean.py`, quality gates
+  via `@dlt.expect_or_drop`.
+- **Why:** deterministic parsing beats inference on gzipped files; cleaning in
+  the silver layer keeps raw bronze append-only (the medallion principle) and
+  makes the sentinel/unit conventions explicit and testable.
+
+## D11 · Exploration notebooks: git-tracked source + workspace import
+
+- **Date:** 2026-08-30
+- **Context:** Captain wanted notebooks to explore the data, make changes, and
+  experiment freely.
+- **Options considered:** (a) notebooks only in the workspace (not in git),
+  (b) git-tracked `.ipynb` in the bundle, (c) git-tracked + imported to a
+  friendly workspace folder.
+- **Decision:** (c) — `.ipynb` files live in `notebooks/` (git + bundle
+  deploy), and `databricks workspace import` pushes working copies to
+  `/Users/<you>/wanderbricks/notebooks/`.
+- **Why:** interactive experiments shouldn't live only in a scratch workspace
+  (lost on teardown, invisible to the repo), but a buried bundle-files path is
+  painful to open in the UI. Git = source of truth + reviewable; workspace
+  import = one command to refresh the interactive copies. Table names are
+  parameterized through widgets so the same notebooks work across dev/prod.
+
+## D12 · Monitoring and serving-test strategy
+
+- **Date:** 2026-08-30
+- **Context:** Captain wanted inference/prediction-time visibility, pipeline
+  flow visibility, and a way to test the serving model.
+- **Decision:** three complementary surfaces — (1) Databricks' built-in run
+  DAGs (job + DLT UIs and CLI runs) for the flow; (2) explicit timing
+  instrumentation in the batch scoring task (`inference_seconds` to MLflow +
+  a `scoring_metrics` Delta table); (3) the serving endpoint's native latency
+  metrics (p50/p95/p99) for real-time, with the endpoint resource kept as an
+  `.example` until a model version exists, plus a test notebook and curl path.
+- **Why:** use the platform's native observability before adding tools; the
+  only thing missing natively was per-run inference timing, so that was the
+  one custom instrument. Datadog stays optional for org-wide dashboards rather
+  than required plumbing.
+
+## D13 · Station identity dropped from the ML features (skeleton)
+
+- **Date:** 2026-08-30
+- **Context:** `weather_features` carries a string `station` column; feeding it
+  to XGBoost would break training.
+- **Decision:** drop `station` (and `date`) from the training/serving feature
+  set in `05_train_xgb.py` and `06_score.py` — one global model for all
+  stations.
+- **Why:** the skeleton's first goal is a working end-to-end run. Station-aware
+  modeling (StringIndexer/one-hot, or per-station training) is a clear,
+  documented next step once the pipeline runs end to end.

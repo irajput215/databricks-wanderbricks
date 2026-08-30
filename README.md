@@ -1,4 +1,4 @@
-# Databricks End-to-End Forecasting Project
+# Wanderbricks — Databricks End-to-End Forecasting Project
 
 An end-to-end **data + ML/AI engineering** project on Databricks for **time-series
 forecasting**, built the modern way: project-as-code with the Databricks CLI,
@@ -8,6 +8,10 @@ Datadog for observability — with a retraining loop so the model stays fresh.
 
 This README teaches the platform first (so every feature later in the procedure
 makes sense), then lays out the project step by step.
+
+> **Docs:** the running development timeline lives in
+> [`docs/development-log.md`](docs/development-log.md) and the decision records
+> (why each choice was made) in [`docs/decisions.md`](docs/decisions.md).
 
 ---
 
@@ -161,7 +165,7 @@ Databricks' native ML lifecycle tool (it IS the company that created MLflow).
 ```python
 import mlflow
 
-mlflow.set_experiment("/Users/you/forecasting")
+mlflow.set_experiment("/Users/you/wanderbricks")
 with mlflow.start_run():
     mlflow.log_param("model", "xgboost")
     mlflow.log_param("lags", 14)
@@ -219,8 +223,8 @@ declared in the bundle.
 ```yaml
 resources:
   jobs:
-    forecasting_pipeline:
-      name: forecasting-pipeline
+    wanderbricks_pipeline:
+      name: wanderbricks-pipeline
       schedule: { quartz_cron_expression: "0 0 6 * * ?", timezone_id: UTC }
       tasks:
         - task_key: ingest          # notebook or .py
@@ -271,7 +275,7 @@ databricks auth login --host https://<workspace>.cloud.databricks.com
 databricks bundle init --template default-dlt   # scaffold from a template
 databricks bundle validate --target dev
 databricks bundle deploy --target dev
-databricks bundle run forecasting_pipeline --refresh-all
+databricks bundle run wanderbricks_pipeline --refresh-all
 databricks bundle destroy --target dev          # teardown
 ```
 
@@ -320,7 +324,7 @@ dev.gold.forecast_features  ── date-based feature table (Feature Store)
 ### Folder layout (this repo)
 
 ```
-databricks-forecasting/
+wanderbricks/
 ├── README.md                 ← you are here
 ├── databricks.yml            ← bundle: targets, jobs, pipelines, serving
 ├── pipelines/
@@ -386,3 +390,152 @@ databricks-forecasting/
 
 > Note: this repo intentionally does not contain credentials. Auth lives in
 > `~/.databrickscfg`; secrets stay in Databricks Secrets, never in git.
+
+---
+
+## Part 3 — The real dataset: NOAA GSOD (weather forecasting)
+
+Wanderbricks now targets **NOAA Global Surface Summary of the Day (GSOD)** —
+daily weather summaries for 9000+ stations worldwide, 1929 to present, updated
+1–2 days behind real time, served from the public bucket `s3://noaa-gsod-pds/`.
+
+**Why it fits:** daily granularity (perfect for Prophet / lag-based XGBoost),
+decades of history, and a real-world streaming-style ingestion source.
+
+### Batch vs. real-time — the decision that matters
+
+| | Triggered (this project) | Continuous |
+| :--- | :--- | :--- |
+| DLT setting | `continuous: false` (default) | `continuous: true` |
+| When it runs | On schedule / on job call | 24/7 |
+| Pickup | Auto Loader picks up new files each run | Auto Loader picks up within seconds |
+| Cost | Compute up, process, down | Serverless auto-scale, always on |
+| Right for | Daily data with 1–2 day freshness | Sub-minute freshness (Kafka, IoT) |
+
+GSOD is **daily data** → triggered is the correct, cost-efficient choice. The
+pipeline code is identical either way (Auto Loader `readStream` + DLT streaming
+tables); flip `continuous: true` only if you later move to an hourly/Kafka
+source. For sub-second serving, register the model and add a Model Serving
+endpoint (README Part 1, step 10) — the endpoint config is added once the first
+model version exists.
+
+### GSOD data facts wired into the code
+
+- **Layout:** `s3://noaa-gsod-pds/<year>/<usaf-wban>-<year>.op.gz` — one gzipped
+  CSV per station per year. `01_ingest.py` currently points at a single recent
+  year for the first validation run; widen to the bucket root for full history.
+- **Values are in tenths:** `TEMP/10 = °C`, `PRCP/10 = mm`, `WDSP/10 = knots`.
+- **Missing values are sentinels:** `9999.9` (temps), `99.99` (precip),
+  `999.9` (wind/visibility) → converted to `NULL` in `02_clean.py`.
+- **Quality gates:** `@dlt.expect_or_drop` drops rows with null dates/stations
+  or physically impossible temperatures.
+- **Features (`weather_features`):** per-station day-of-week/year/month,
+  weekend flag, `temp_lag_{1,7,14,28}`, `temp_rollmean_{7,14}` (strictly prior
+  days), with `temp_c` as the forecast target.
+- **Public bucket access:** reading `s3://noaa-gsod-pds/` works from serverless
+  compute for workspace admins. If access is ever denied, either set the
+  anonymous AWS credentials provider as a Spark config or copy a subset into
+  your own bucket.
+
+### End-to-end flow
+
+```
+s3://noaa-gsod-pds/2025/  ──Auto Loader──►  gsod_bronze (ST)
+                                              │  DLT: clean + unit conversion
+                                              ▼
+                                          gsod_silver (ST)  ← @dlt.expect_or_drop
+                                              │  DLT: features (materialized view)
+                                              ▼
+                                        weather_features (MV)
+                                              │
+                    ┌─────────────────────────┼──────────────────────────┐
+                    ▼                         ▼                          ▼
+             04_baseline.py           05_train_xgb.py            06_score.py
+             (Prophet, MLflow)        (register model)          (write forecasts)
+```
+
+The whole chain is one daily Databricks job: DLT pipeline → baseline → train →
+score, deployed and runnable from the bundle.
+
+---
+
+## Part 4 — Monitoring, pipeline flow & testing the serving model
+
+### 1. See the flow of the data pipeline
+
+Every run renders as a **task DAG** — this is the ground truth of the flow:
+
+- **Job run page** (workspace → Workflows → the run) draws the graph
+  `dlt_pipeline → baseline → train → score` with per-task duration, cluster
+  info, and logs.
+- **DLT pipeline UI** draws its own bronze → silver → gold graph with per-table
+  rows/quality metrics and data-lineage links.
+- **CLI:**
+  ```sh
+  databricks bundle run wanderbricks_job --refresh-all       # run + follow progress
+  databricks jobs list-runs --job-id <job-id>                # history
+  databricks jobs get-run --run-id <run-id>                  # task states + durations
+  ```
+
+### 2. Batch inference / prediction time
+
+`06_score.py` now times the scoring call and records it two ways:
+
+- **MLflow metric** `inference_seconds` (run page → Metrics).
+- **Delta table** `{schema}.scoring_metrics` (run_date, rows, inference_seconds):
+
+  ```sql
+  SELECT * FROM workspace.iraonfridays.scoring_metrics ORDER BY run_date DESC;
+  ```
+
+Training-time evaluation timing lives in the MLflow run for `05_train_xgb.py`
+(rmse/mae + run duration — visible in the Experiment UI).
+
+### 3. Real-time serving latency
+
+Once the endpoint is enabled (below), its **Metrics tab** shows server-side
+latency percentiles (p50/p95/p99), requests/second, and error rate — the
+numbers that matter for a REST API. `scale_to_zero_enabled: true` means the
+first request after idle pays a cold start; disable it for guaranteed latency.
+
+### 4. Datadog (optional, for cross-tool dashboards)
+
+Databricks → **Settings → Datadog integration** (admin): paste your Datadog
+API key + site, and the workspace exports job metrics, cluster/serverless
+metrics, DBU usage, and **serving-endpoint latency** to Datadog. That's the
+layer for org-wide dashboards/alerts; Lakehouse Monitoring
+(`monitoring/monitors.sql`) stays the data-quality/drift layer.
+
+### 5. Testing the serving model
+
+The endpoint resource is ready but disabled (`resources/wanderbricks_serving.endpoint.yml.example` —
+the bundle skips `.example` files because deploy fails while no model version
+exists). Enable after the first training run:
+
+```sh
+git mv resources/wanderbricks_serving.endpoint.yml.example \
+       resources/wanderbricks_serving.endpoint.yml
+databricks bundle deploy --target dev
+```
+
+Then test **from a notebook** (easiest — token handled for you):
+**`notebooks/04_test_serving.ipynb`** (imported to
+`/Users/<you>/wanderbricks/notebooks/04_test_serving`) builds a real payload
+from `weather_features`, POSTs to the endpoint, prints the prediction and the
+round-trip time.
+
+Or **from the CLI/terminal**:
+
+```sh
+DATABRICKS_TOKEN=$(databricks auth token --profile dev | jq -r '.token_value')
+curl -X POST \
+  https://dbc-2944edfb-cd25.cloud.databricks.com/serving-endpoints/wanderbricks-weather-serve/invocations \
+  -H "Authorization: Bearer $DATABRICKS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"dataframe_records": [{"day_of_week":3,"day_of_year":200,"month":7,"is_weekend":0,
+        "temp_lag_1":24.5,"temp_lag_7":22.1,"temp_lag_14":20.3,"temp_lag_28":18.7,
+        "temp_rollmean_7":23.2,"temp_rollmean_14":22.4}]}'
+```
+
+Expected: `{"predictions": [<temperature °C>]}`. The workspace UI also has a
+built-in **Query endpoint** playground on the endpoint page.

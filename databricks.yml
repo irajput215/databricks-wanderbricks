@@ -1,7 +1,7 @@
 # Declarative Automation Bundle for the Databricks end-to-end forecasting project.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
-  name: databricks-forecasting
+  name: wanderbricks
   uuid: b2069324-370a-4d04-8f83-9751561eb260
 
 include:

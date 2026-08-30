@@ -1,0 +1,74 @@
+# The daily Wanderbricks job:
+#   DLT pipeline (ingest + clean + features) -> baseline -> train -> score
+# See README Part 2, steps 8 and 10 (orchestration + retraining loop).
+
+resources:
+  jobs:
+    wanderbricks_job:
+      name: wanderbricks-job
+
+      trigger:
+        # Run every day; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      email_notifications:
+        on_failure:
+          - iraonfridays@gmail.com
+
+      # Serverless-only workspace: no job_clusters. Python tasks run on
+      # serverless compute with an environment spec for dependencies.
+      environments:
+        - environment_key: forecast_ml
+          spec:
+            environment_version: "4"
+            dependencies:
+              - prophet
+              - xgboost
+              - scikit-learn
+
+      tasks:
+        - task_key: dlt_pipeline
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.wanderbricks_pipeline.id}
+
+        - task_key: baseline
+          environment_key: forecast_ml
+          depends_on:
+            - task_key: dlt_pipeline
+          spark_python_task:
+            python_file: ../ml/04_baseline.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
+
+        - task_key: train
+          environment_key: forecast_ml
+          depends_on:
+            - task_key: dlt_pipeline
+          spark_python_task:
+            python_file: ../ml/05_train_xgb.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
+
+        - task_key: score
+          environment_key: forecast_ml
+          depends_on:
+            - task_key: train
+          spark_python_task:
+            python_file: ../ml/06_score.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
+
+      # Retraining loop (README Part 2, step 10): add a task that compares
+      # forecast error vs. threshold and conditionally retrains/promotes,
+      # e.g. via a separate "retrain_on_drift" job triggered by a monitor alert.

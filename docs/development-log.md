@@ -90,3 +90,11 @@ serving work) with a full description (summary, per-area table, decisions,
 runbook, status). Captain reviewed and merged. Local `main` fast-forwarded to
 the merge commit and the merged branch deleted locally + remotely. First
 reviewable milestone of the project.
+
+### 11 · First live pipeline run — SUCCESS
+First `bundle run wanderbricks_pipeline --refresh-all` failed on
+[UC_VOLUME_NOT_FOUND]: Auto Loader's schemaLocation pointed at a volume that
+didn't exist. Fix: created managed volume `workspace.iraonfridays._schemas`
+(`databricks volumes create`). Re-run COMPLETED: gsod_bronze + gsod_silver
+(streaming tables) + weather_features (materialized view) all built from the
+public GSOD 2025 data. Tables verified in the catalog.

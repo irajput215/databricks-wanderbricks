@@ -1,5 +1,5 @@
-# The end-to-end daily Wanderbricks job:
-#   ingest -> DLT pipeline (clean + features) -> baseline -> train -> score
+# The daily Wanderbricks job:
+#   DLT pipeline (ingest + clean + features) -> baseline -> train -> score
 # See README Part 2, steps 8 and 10 (orchestration + retraining loop).
 
 resources:
@@ -29,14 +29,7 @@ resources:
               - scikit-learn
 
       tasks:
-        - task_key: ingest
-          environment_key: forecast_ml
-          spark_python_task:
-            python_file: ../pipelines/01_ingest.py
-
         - task_key: dlt_pipeline
-          depends_on:
-            - task_key: ingest
           pipeline_task:
             pipeline_id: ${resources.pipelines.wanderbricks_pipeline.id}
 
@@ -46,6 +39,11 @@ resources:
             - task_key: dlt_pipeline
           spark_python_task:
             python_file: ../ml/04_baseline.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
 
         - task_key: train
           environment_key: forecast_ml
@@ -53,6 +51,11 @@ resources:
             - task_key: dlt_pipeline
           spark_python_task:
             python_file: ../ml/05_train_xgb.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
 
         - task_key: score
           environment_key: forecast_ml
@@ -60,8 +63,12 @@ resources:
             - task_key: train
           spark_python_task:
             python_file: ../ml/06_score.py
+            parameters:
+              - "--catalog"
+              - "${var.catalog}"
+              - "--schema"
+              - "${var.schema}"
 
       # Retraining loop (README Part 2, step 10): add a task that compares
       # forecast error vs. threshold and conditionally retrains/promotes,
-      # e.g. via `if: "{{ ... }}"` job-cluster conditions or a separate
-      # "retrain_on_drift" job triggered by a monitor alert.
+      # e.g. via a separate "retrain_on_drift" job triggered by a monitor alert.

@@ -1,6 +1,8 @@
-# Delta Live Tables pipeline: bronze -> silver -> gold for forecasting.
-# Runs 02_clean.py (silver, with quality expectations) and 03_features.py (gold).
-# See README Part 2, steps 2-3.
+# Delta Live Tables pipeline: bronze -> silver -> gold for Wanderbricks.
+#  01_ingest.py  (gsod_bronze, streaming table, Auto Loader from public S3)
+#  02_clean.py   (gsod_silver, streaming table, @dlt.expect_or_drop quality)
+#  03_features.py(weather_features, materialized view, lags + rolling)
+# See README Part 2, steps 2-3 and Part 3 (NOAA GSOD).
 
 resources:
   pipelines:
@@ -9,14 +11,20 @@ resources:
       catalog: ${var.catalog}
       schema: ${var.schema}
       serverless: true
+      # Triggered (default) = the pipeline runs on a schedule or when the job
+      # calls it; compute spins up, processes the new day's files, shuts down.
+      # Set `continuous: true` for 24/7 pickup of a true real-time stream
+      # (keeps serverless compute running around the clock - only for
+      # sub-minute freshness needs).
+      continuous: false
       root_path: "../pipelines"
+
+      # Spark configuration passed to the pipeline (read in code via
+      # spark.conf.get). gsod.schema.location is where Auto Loader keeps its
+      # schema-tracking state; point it at a real UC volume path.
+      configuration:
+        gsod.schema.location: "/Volumes/${var.catalog}/${var.schema}/_schemas/gsod"
 
       libraries:
         - glob:
-            include: ../pipelines/02_clean.py
-        - glob:
-            include: ../pipelines/03_features.py
-
-      # NOTE: the pipeline modules currently reference table names like
-      # dev.silver.* / dev.gold.* with TODO markers; parameterize them to
-      # ${var.catalog}/${var.schema} once the raw schema is known.
+            include: ../pipelines/**

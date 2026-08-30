@@ -1,49 +1,52 @@
 """
-03_features.py — build the date-keyed feature table (gold) for forecasting.
+03_features.py — Gold: per-station daily forecasting features.
 
-Calendar features, lags, rolling statistics -> dev.gold.forecast_features,
-registered in the Feature Store. See README Part 2, step 3.
+Materialized view over gsod_silver (dlt.read = batch recompute each run, so
+lag/rolling window functions are legal — they are NOT on a streaming read).
+Adds calendar features + lag and rolling temperature features per station.
+
+Forecast target: temp_c at date t, explained by features known at t-1 and
+earlier (lags + rolling stats), exactly what 05_train_xgb.py consumes.
+
+For a REAL-TIME variant (sub-minute rolling windows on a stream), replace the
+lag/rolling block with window() + groupBy aggregation on dlt.read_stream —
+see README Part 3 for the comparison.
 """
+import dlt
 import pyspark.sql.functions as F
-from databricks.feature_store import FeatureStoreClient
+from pyspark.sql import Window
 
-from pyspark.sql import DataFrame
-
-LAG_WINDOWS = [1, 7, 14, 28]        # TODO: tune to your series
-ROLLING_WINDOWS = [7, 14]           # TODO: tune
+LAG_WINDOWS = [1, 7, 14, 28]
+ROLLING_WINDOWS = [7, 14]
 
 
-def add_time_features(df: DataFrame) -> DataFrame:
-    return (
-        df.withColumn("day_of_week", F.dayofweek("sale_date"))
-         .withColumn("day_of_month", F.dayofmonth("sale_date"))
-         .withColumn("month", F.month("sale_date"))
-         .withColumn("is_weekend", F.col("day_of_week").isin(1, 7).cast("int"))
-    )
+@dlt.table(
+    name="weather_features",
+    comment="Per-station daily features (calendar + lags + rolling) for forecasting",
+)
+def weather_features():
+    silver = dlt.read("gsod_silver")
+    station_w = Window.partitionBy("station").orderBy("date")
 
+    df = silver.withColumn("day_of_week", F.dayofweek("date")) \
+               .withColumn("day_of_year", F.dayofyear("date")) \
+               .withColumn("month", F.month("date")) \
+               .withColumn("is_weekend", F.col("day_of_week").isin(1, 7).cast("int"))
 
-def add_lag_and_rolling(df: DataFrame) -> DataFrame:
-    out = df
     for lag in LAG_WINDOWS:
-        out = out.withColumn(f"value_lag_{lag}", F.lag("value", lag).over(
-            F.window("sale_date", "1 day").orderBy("sale_date")))
+        df = df.withColumn(f"temp_lag_{lag}", F.lag("temp_c", lag).over(station_w))
+
     for w in ROLLING_WINDOWS:
-        out = out.withColumn(f"rolling_mean_{w}", F.avg("value").over(
-            F.window("sale_date", f"{w} days").orderBy("sale_date")))
-    return out
+        rolling = (
+            Window.partitionBy("station")
+            .orderBy("date")
+            .rowsBetween(-w, -1)          # strictly prior w days, excluding today
+        )
+        df = df.withColumn(f"temp_rollmean_{w}", F.avg("temp_c").over(rolling))
 
-
-def main() -> None:
-    clean = spark.table("dev.silver.sales_clean")
-    features = add_lag_and_rolling(add_time_features(clean))
-    fs = FeatureStoreClient()
-    fs.create_table(
-        name="dev.gold.forecast_features",
-        primary_keys=["sale_date"],
-        df=features,
-        schema=features.schema,
+    return df.select(
+        "station", "date", "temp_c",  # temp_c = target
+        "day_of_week", "day_of_year", "month", "is_weekend",
+        *[f"temp_lag_{lag}" for lag in LAG_WINDOWS],
+        *[f"temp_rollmean_{w}" for w in ROLLING_WINDOWS],
     )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,9 +1,12 @@
 """
-05_train_xgb.py — XGBoost forecast model on lag/rolling features, MLflow-tracked.
+05_train_xgb.py — XGBoost forecast model on gold features, MLflow-tracked.
 
-Uses the gold feature table; compares against the Prophet baseline; registers
-the best model in the Model Registry. See README Part 2, step 5-6.
+Reads weather_features (temp_c = target; lags/rolling/calendar = features),
+trains XGBoost, logs to MLflow, and registers the model in the Model
+Registry as `wanderbricks_weather_xgb`. Runs as a job task with
+--catalog/--schema.
 """
+import argparse
 import mlflow
 import pandas as pd
 import xgboost as xgb
@@ -11,19 +14,34 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.model_selection import train_test_split
 import numpy as np
 
-
-def load_features() -> pd.DataFrame:
-    return spark.table("dev.gold.forecast_features").drop("sale_date").toPandas()
+MODEL_NAME = "wanderbricks_weather_xgb"
 
 
-def train_and_register(horizon: int = 30, n_estimators: int = 300) -> None:
-    df = load_features().dropna()
-    y = df.pop("value")
+def parse_args():
+    p = argparse.ArgumentParser()
+    p.add_argument("--catalog", required=True)
+    p.add_argument("--schema", required=True)
+    p.add_argument("--test-size", type=float, default=0.1, help="held-out tail fraction")
+    p.add_argument("--n-estimators", type=int, default=300)
+    return p.parse_args()
+
+
+def load_features(catalog: str, schema: str) -> pd.DataFrame:
+    return (
+        spark.table(f"{catalog}.{schema}.weather_features")
+        .drop("date")            # temporal order is encoded in the features
+        .toPandas()
+        .dropna()
+    )
+
+
+def train_and_register(df: pd.DataFrame, test_size: float, n_estimators: int) -> None:
+    y = df.pop("temp_c")
     X = df
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=horizon / len(df), shuffle=False)
+        X, y, test_size=test_size, shuffle=False)  # no shuffle: respect time order
 
-    with mlflow.start_run(run_name="xgb_forecast"):
+    with mlflow.start_run(run_name="xgb_weather"):
         model = xgb.XGBRegressor(
             n_estimators=n_estimators,
             max_depth=5,
@@ -40,10 +58,11 @@ def train_and_register(horizon: int = 30, n_estimators: int = 300) -> None:
         mlflow.xgboost.log_model(model, "model")
         print(f"xgb rmse={rmse:.3f} mae={mae:.3f}")
 
-        # Register for serving / retraining pipeline
         mlflow.register_model(
-            f"runs:/{mlflow.active_run().info.run_id}/model", "forecast_model")
+            f"runs:/{mlflow.active_run().info.run_id}/model", MODEL_NAME)
 
 
 if __name__ == "__main__":
-    train_and_register()
+    args = parse_args()
+    train_and_register(
+        load_features(args.catalog, args.schema), args.test_size, args.n_estimators)

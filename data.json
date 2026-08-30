@@ -1,0 +1,16 @@
+{
+  "dataframe_records": [
+    {
+      "day_of_week": 3,
+      "day_of_year": 200,
+      "month": 7,
+      "is_weekend": 0,
+      "temp_lag_1": 24.5,
+      "temp_lag_7": 22.1,
+      "temp_lag_14": 20.3,
+      "temp_lag_28": 18.7,
+      "temp_rollmean_7": 23.2,
+      "temp_rollmean_14": 22.4
+    }
+  ]
+}

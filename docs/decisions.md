@@ -17,12 +17,12 @@ decision → why**. The timeline of what happened is in
   machinery is for managed clones. If it ever needs fleet-managed workers, it
   can be cloned into the registry then.
 
-## D3 · Teaching README before code
+## D3 · Teaching INFORMATION.md before code
 
 - **Date:** 2026-08-30
 - **Context:** Captain asked to "teach me every feature of Databricks with
   examples" before the procedure.
-- **Decision:** the README is a full platform tour + project procedure, written
+- **Decision:** INFORMATION.md is a full platform tour + project procedure, written
   first, and later extended (Part 3: GSOD) as the project grew.
 - **Why:** the captain is learning the platform; a doc-first project makes every
   later step self-explanatory and keeps a single source of truth.
@@ -198,7 +198,7 @@ decision → why**. The timeline of what happened is in
 - **Date:** 2026-08-30
 - **Context:** The test notebook called `wanderbricks-weather-serve`; the
   deployed dev endpoint is `dev_iraonfridays_wanderbricks-weather-serve`.
-- **Decision:** document the prefix (README + notebook) and default the
+- **Decision:** document the prefix (INFORMATION.md + notebook) and default the
   notebook widget to the dev name; prod uses the unprefixed name.
 - **Why:** dev-mode prefixing is a Databricks safety feature (isolated dev
   copies); the notebook now works as-shipped in dev and needs one widget

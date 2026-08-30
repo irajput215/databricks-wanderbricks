@@ -82,3 +82,11 @@ from features); added `resources/wanderbricks_serving.endpoint.yml.example`
 added `notebooks/04_test_serving.ipynb` (imported to the workspace); README
 Part 4 documents the job/DLT run DAGs, CLI run commands, latency surfaces, the
 Datadog integration, and curl/notebook serving tests.
+
+### 10 · First PR — created, reviewed, merged
+Opened PR #1 "Wanderbricks: end-to-end GSOD weather forecasting on Databricks"
+(branch `feat/gsod-forecasting`, 7 commits: serverless fix through monitoring/
+serving work) with a full description (summary, per-area table, decisions,
+runbook, status). Captain reviewed and merged. Local `main` fast-forwarded to
+the merge commit and the merged branch deleted locally + remotely. First
+reviewable milestone of the project.

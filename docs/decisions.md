@@ -157,3 +157,38 @@ decision → why**. The timeline of what happened is in
 - **Why:** the skeleton's first goal is a working end-to-end run. Station-aware
   modeling (StringIndexer/one-hot, or per-station training) is a clear,
   documented next step once the pipeline runs end to end.
+
+## D14 · The AWS GSOD bucket is US-units and its own layout
+
+- **Date:** 2026-08-30
+- **Context:** The project assumed the classic NCEI GSOD format (tenths of °C,
+  `.op.gz` files). The live `noaa-gsod-pds` bucket stores `<year>/<station>.csv`
+  with **°F, inches, knots**.
+- **Decision:** full 28-column schema in bronze (positional-safe), conversions
+  in silver (F→C, in→mm); sentinels (9999.9/99.99/999.9) → NULL.
+- **Why:** verified against real bucket files; unit conversion in silver keeps
+  bronze append-only raw and makes conventions explicit/testable.
+
+## D15 · Auto Loader schema state is sticky — use fresh locations on schema change
+
+- **Date:** 2026-08-30
+- **Context:** A subset schema misaligned bronze columns; fixing the schema did
+  not fix the table because Auto Loader persisted and EVOLVED the old schema
+  state in schemaLocation.
+- **Decision:** full-schema reads, a fresh schemaLocation subpath
+  (`_schemas/gsod_v2`), `cloudFiles.schemaEvolutionMode=none`, and a clean
+  reset (drop tables + volume, `--full-refresh-all`) when the source schema
+  changes.
+- **Why:** schemaLocation persists inference/evolution state across runs; the
+  fresh path makes schema changes deterministic instead of silently shifting
+  columns.
+
+## D16 · Unity Catalog model constraints: signatures + aliases
+
+- **Date:** 2026-08-30
+- **Context:** UC-registered models must carry input+output signatures, and
+  stage-based loading (`/Production`) is unsupported — aliases replace stages.
+- **Decision:** `infer_signature` on `log_model`; set `@Production` alias at
+  registration; score loads `models:/catalog.schema.name@Production`.
+- **Why:** hard platform requirements (verified by failed runs); aliases are
+  the UC-native promotion mechanism and work with the serving endpoint config.

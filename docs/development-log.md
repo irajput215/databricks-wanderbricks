@@ -98,3 +98,23 @@ didn't exist. Fix: created managed volume `workspace.iraonfridays._schemas`
 (`databricks volumes create`). Re-run COMPLETED: gsod_bronze + gsod_silver
 (streaming tables) + weather_features (materialized view) all built from the
 public GSOD 2025 data. Tables verified in the catalog.
+
+### 12 · Debugging saga: schema, units, and UC quirks — then FULL SUCCESS
+First end-to-end job run surfaced a chain of real-world issues, each fixed:
+1. **Empty silver** — DATE parse format was yyyyMMdd but the bucket uses ISO dates.
+2. **Misaligned bronze columns** — the bucket layout is `<year>/<station>.csv`
+   (plain quoted CSV, 28 cols), not `.op.gz`; a subset schema maps positionally
+   and Auto Loader's persisted schema state evolved rather than replaced.
+   Fixed with the full 28-column schema, a FRESH schemaLocation path, and
+   `schemaEvolutionMode=none`, then a full reset (drop tables, recreate volume,
+   `--full-refresh-all`).
+3. **US units discovered** — the AWS bucket stores °F / inches / knots, not
+   metric tenths; silver now converts °F→°C and in→mm.
+4. **MLflow experiment missing** — added `mlflow.set_experiment("/Shared/wanderbricks_forecast")`.
+5. **UC requires model signatures** — added `infer_signature` on log_model.
+6. **UC forbids stages** — switched to a `@Production` alias set at registration,
+   loaded via `models:/<catalog>.<schema>.<name>@Production`.
+RESULT: full job run SUCCESS — Prophet baseline, XGBoost registered as
+`workspace.iraonfridays.wanderbricks_weather_xgb@Production`, and
+**11,329 station forecasts scored in 0.0491s** (recorded in
+`scoring_metrics`). First complete end-to-end run of the project.

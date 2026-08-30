@@ -23,7 +23,7 @@ resources:
       # spark.conf.get). gsod.schema.location is where Auto Loader keeps its
       # schema-tracking state; point it at a real UC volume path.
       configuration:
-        gsod.schema.location: "/Volumes/${var.catalog}/${var.schema}/_schemas/gsod"
+        gsod.schema.location: "/Volumes/${var.catalog}/${var.schema}/_schemas/gsod_v2"
 
       libraries:
         - glob:

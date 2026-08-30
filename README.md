@@ -175,7 +175,7 @@ with mlflow.start_run():
 
     # Register to the Model Registry with a stage
     model_uri = f"runs:/{mlflow.active_run().info.run_id}/model"
-    mlflow.register_model(model_uri, "forecast_model")
+    mlflow.register_model(model_uri, "wanderbricks_weather_xgb")
 ```
 
 The **Model Registry** stages models (`None → Staging → Production → Archived`)
@@ -205,7 +205,7 @@ as a job.
 ```sh
 databricks serving-endpoints create \
   --name forecast-serve \
-  --config '{"served_models":[{"model_name":"forecast_model","model_version":"2"}]}'
+  --config '{"served_models":[{"model_name":"wanderbricks_weather_xgb","model_version":"2"}]}'
 ```
 
 ```sh
@@ -421,11 +421,15 @@ model version exists.
 
 ### GSOD data facts wired into the code
 
-- **Layout:** `s3://noaa-gsod-pds/<year>/<usaf-wban>-<year>.op.gz` — one gzipped
-  CSV per station per year. `01_ingest.py` currently points at a single recent
-  year for the first validation run; widen to the bucket root for full history.
-- **Values are in tenths:** `TEMP/10 = °C`, `PRCP/10 = mm`, `WDSP/10 = knots`.
-- **Missing values are sentinels:** `9999.9` (temps), `99.99` (precip),
+- **Layout:** `s3://noaa-gsod-pds/<year>/<station>.csv` — one plain quoted CSV per
+  station per year (the AWS bucket, not the classic `.op.gz` layout).
+  `01_ingest.py` currently points at a single recent year for validation; widen
+  to the bucket root for full history.
+- **US units (verified on the live bucket):** temperatures in **°F**, precipitation
+  in **inches**, wind in **knots** — converted to °C/mm in `02_clean.py`.
+- **Full 28-column schema in bronze** — including the `*_ATTRIBUTES` quality-flag
+  columns; a subset schema misaligns after `NAME` (verified on a failed run).
+- **Missing values are sentinels:** `9999.9` (temps/pressure), `99.99` (precip),
   `999.9` (wind/visibility) → converted to `NULL` in `02_clean.py`.
 - **Quality gates:** `@dlt.expect_or_drop` drops rows with null dates/stations
   or physically impossible temperatures.

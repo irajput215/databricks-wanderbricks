@@ -2,21 +2,30 @@
 02_clean.py — Silver: validated, unit-converted GSOD daily weather.
 
 Streaming table fed by gsod_bronze. @dlt.expect_or_drop enforces business
-rules in real time (invalid rows are dropped, not silently kept). Converts
-GSOD conventions: tenths -> real units, sentinel missing values -> NULL.
+rules in real time (invalid rows are dropped, not silently kept).
+
+Units: the bucket stores US units — temperatures in °F, precipitation in
+inches, wind in knots. Converted here to °C / mm; GSOD missing-value
+sentinels become NULL.
 """
 import dlt
 from pyspark.sql.functions import col, to_date, when, round as _round
 
 # GSOD missing-value sentinels (per the GSOD readme)
-_TEMP_SENTINEL = 9999.9   # TEMP/MAX/MIN/DEWP etc.
+_TEMP_SENTINEL = 9999.9   # TEMP/MAX/MIN/DEWP/SLP
+_WIND_SENTINEL = 999.9    # STP/VISIB/WDSP/MXSPD/GUST/SNDP
 _PRCP_SENTINEL = 99.99    # PRCP
-_WDSP_SENTINEL = 999.9    # WDSP/VISIB
+
+
+def _f_to_c(raw_col):
+    """°F -> °C with the 9999.9-style sentinel mapped to NULL."""
+    return when(col(raw_col) >= _TEMP_SENTINEL * 0.99, None) \
+        .otherwise(_round((col(raw_col) - 32.0) * 5.0 / 9.0, 2))
 
 
 @dlt.table(
     name="gsod_silver",
-    comment="Validated clean daily weather with real units and NULL for missing",
+    comment="Validated clean daily weather in metric units with NULL for missing",
 )
 @dlt.expect_or_drop("valid_date", "date IS NOT NULL")
 @dlt.expect_or_drop("valid_station", "station IS NOT NULL")
@@ -25,30 +34,24 @@ def gsod_silver():
     raw = dlt.read_stream("gsod_bronze")
     return (
         raw
-        .withColumn("date", to_date(col("DATE"), "yyyyMMdd"))
-        .withColumn(
-            "temp_c",
-            when(col("TEMP") >= _TEMP_SENTINEL * 0.99, None).otherwise(_round(col("TEMP") / 10.0, 2)),
-        )
-        .withColumn(
-            "max_c",
-            when(col("MAX") >= _TEMP_SENTINEL * 0.99, None).otherwise(_round(col("MAX") / 10.0, 2)),
-        )
-        .withColumn(
-            "min_c",
-            when(col("MIN") >= _TEMP_SENTINEL * 0.99, None).otherwise(_round(col("MIN") / 10.0, 2)),
-        )
-        .withColumn(
-            "dewp_c",
-            when(col("DEWP") >= _TEMP_SENTINEL * 0.99, None).otherwise(_round(col("DEWP") / 10.0, 2)),
-        )
+        .withColumn("date", to_date(col("DATE"), "yyyy-MM-dd"))
+        .withColumn("temp_c", _f_to_c("TEMP"))
+        .withColumn("max_c", _f_to_c("MAX"))
+        .withColumn("min_c", _f_to_c("MIN"))
+        .withColumn("dewp_c", _f_to_c("DEWP"))
         .withColumn(
             "prcp_mm",
-            when(col("PRCP") >= _PRCP_SENTINEL * 0.99, None).otherwise(_round(col("PRCP") / 10.0, 2)),
+            when(col("PRCP") >= _PRCP_SENTINEL * 0.99, None)
+            .otherwise(_round(col("PRCP") * 25.4, 2)),          # inches -> mm
         )
         .withColumn(
             "wdsp_knots",
-            when(col("WDSP") >= _WDSP_SENTINEL * 0.99, None).otherwise(_round(col("WDSP") / 10.0, 1)),
+            when(col("WDSP") >= _WIND_SENTINEL * 0.99, None)
+            .otherwise(_round(col("WDSP"), 1)),
+        )
+        .withColumn(
+            "visib_miles",
+            when(col("VISIB") >= _WIND_SENTINEL * 0.99, None).otherwise(col("VISIB")),
         )
         .withColumn("latitude", col("LATITUDE"))
         .withColumn("longitude", col("LONGITUDE"))
@@ -57,7 +60,7 @@ def gsod_silver():
         .withColumn("frshtt", col("FRSHTT"))
         .select(
             "station", "date", "temp_c", "max_c", "min_c", "dewp_c",
-            "prcp_mm", "wdsp_knots", "latitude", "longitude", "elevation",
-            "station_name", "frshtt", "ingestion_time",
+            "prcp_mm", "wdsp_knots", "visib_miles", "latitude", "longitude",
+            "elevation", "station_name", "frshtt", "ingestion_time",
         )
     )

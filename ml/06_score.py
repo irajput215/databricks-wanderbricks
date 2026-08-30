@@ -26,7 +26,7 @@ def parse_args():
 
 
 def score(catalog: str, schema: str, horizon: int) -> None:
-    model_uri = f"models:/{MODEL_NAME}/Production"
+    model_uri = f"models:/{catalog}.{schema}.{MODEL_NAME}@Production"
     model = mlflow.pyfunc.load_model(model_uri)
 
     features = (

@@ -46,6 +46,7 @@ def train_and_log(series: pd.DataFrame, horizon: int) -> None:
     split = len(series) - horizon
     train, test = series.iloc[:split], series.iloc[split:]
 
+    mlflow.set_experiment("/Shared/wanderbricks_forecast")
     with mlflow.start_run(run_name="baseline_prophet"):
         model = Prophet(daily_seasonality=True)
         model.fit(train)

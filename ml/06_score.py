@@ -9,6 +9,7 @@ NOTE: real scoring needs features built up to the prediction date; the DLT
 pipeline must run right before this task (it does — same job chain).
 """
 import argparse
+import time
 import mlflow
 import pandas as pd
 from datetime import date, timedelta
@@ -42,7 +43,10 @@ def score(catalog: str, schema: str, horizon: int) -> None:
         .tail(1)                     # last feature row per station
         .copy()
     )
+
+    t0 = time.perf_counter()
     pred = model.predict(latest_per_station.drop(columns=["station", "temp_c"]))
+    inference_s = time.perf_counter() - t0
 
     out = pd.DataFrame({
         "station": latest_per_station["station"].values,
@@ -52,7 +56,21 @@ def score(catalog: str, schema: str, horizon: int) -> None:
     spark.createDataFrame(out).write \
         .mode("append") \
         .saveAsTable(f"{catalog}.{schema}.forecasts")
-    print(f"scored {len(out)} station forecasts for {horizon} days")
+
+    # --- inference-time monitoring ---------------------------------------
+    # Log to MLflow (visible in the experiment/run UI) AND to a Delta table
+    # (queryable: SELECT * FROM <schema>.scoring_metrics ORDER BY run_date).
+    try:
+        mlflow.log_metric("inference_seconds", inference_s)
+    except Exception:
+        pass  # scoring must not fail because metrics logging did
+    metrics = spark.createDataFrame([
+        (date.today().isoformat(), len(out), round(inference_s, 4)),
+    ], ["run_date", "rows", "inference_seconds"])
+    metrics.write.mode("append") \
+        .saveAsTable(f"{catalog}.{schema}.scoring_metrics")
+    print(f"scored {len(out)} station forecasts for {horizon} days "
+          f"(inference {inference_s:.4f}s)")
 
 
 if __name__ == "__main__":

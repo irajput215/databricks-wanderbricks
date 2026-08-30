@@ -456,3 +456,86 @@ s3://noaa-gsod-pds/2025/  ──Auto Loader──►  gsod_bronze (ST)
 
 The whole chain is one daily Databricks job: DLT pipeline → baseline → train →
 score, deployed and runnable from the bundle.
+
+---
+
+## Part 4 — Monitoring, pipeline flow & testing the serving model
+
+### 1. See the flow of the data pipeline
+
+Every run renders as a **task DAG** — this is the ground truth of the flow:
+
+- **Job run page** (workspace → Workflows → the run) draws the graph
+  `dlt_pipeline → baseline → train → score` with per-task duration, cluster
+  info, and logs.
+- **DLT pipeline UI** draws its own bronze → silver → gold graph with per-table
+  rows/quality metrics and data-lineage links.
+- **CLI:**
+  ```sh
+  databricks bundle run wanderbricks_job --refresh-all       # run + follow progress
+  databricks jobs list-runs --job-id <job-id>                # history
+  databricks jobs get-run --run-id <run-id>                  # task states + durations
+  ```
+
+### 2. Batch inference / prediction time
+
+`06_score.py` now times the scoring call and records it two ways:
+
+- **MLflow metric** `inference_seconds` (run page → Metrics).
+- **Delta table** `{schema}.scoring_metrics` (run_date, rows, inference_seconds):
+
+  ```sql
+  SELECT * FROM workspace.iraonfridays.scoring_metrics ORDER BY run_date DESC;
+  ```
+
+Training-time evaluation timing lives in the MLflow run for `05_train_xgb.py`
+(rmse/mae + run duration — visible in the Experiment UI).
+
+### 3. Real-time serving latency
+
+Once the endpoint is enabled (below), its **Metrics tab** shows server-side
+latency percentiles (p50/p95/p99), requests/second, and error rate — the
+numbers that matter for a REST API. `scale_to_zero_enabled: true` means the
+first request after idle pays a cold start; disable it for guaranteed latency.
+
+### 4. Datadog (optional, for cross-tool dashboards)
+
+Databricks → **Settings → Datadog integration** (admin): paste your Datadog
+API key + site, and the workspace exports job metrics, cluster/serverless
+metrics, DBU usage, and **serving-endpoint latency** to Datadog. That's the
+layer for org-wide dashboards/alerts; Lakehouse Monitoring
+(`monitoring/monitors.sql`) stays the data-quality/drift layer.
+
+### 5. Testing the serving model
+
+The endpoint resource is ready but disabled (`resources/wanderbricks_serving.endpoint.yml.example` —
+the bundle skips `.example` files because deploy fails while no model version
+exists). Enable after the first training run:
+
+```sh
+git mv resources/wanderbricks_serving.endpoint.yml.example \
+       resources/wanderbricks_serving.endpoint.yml
+databricks bundle deploy --target dev
+```
+
+Then test **from a notebook** (easiest — token handled for you):
+**`notebooks/04_test_serving.ipynb`** (imported to
+`/Users/<you>/wanderbricks/notebooks/04_test_serving`) builds a real payload
+from `weather_features`, POSTs to the endpoint, prints the prediction and the
+round-trip time.
+
+Or **from the CLI/terminal**:
+
+```sh
+DATABRICKS_TOKEN=$(databricks auth token --profile dev | jq -r '.token_value')
+curl -X POST \
+  https://dbc-2944edfb-cd25.cloud.databricks.com/serving-endpoints/wanderbricks-weather-serve/invocations \
+  -H "Authorization: Bearer $DATABRICKS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"dataframe_records": [{"day_of_week":3,"day_of_year":200,"month":7,"is_weekend":0,
+        "temp_lag_1":24.5,"temp_lag_7":22.1,"temp_lag_14":20.3,"temp_lag_28":18.7,
+        "temp_rollmean_7":23.2,"temp_rollmean_14":22.4}]}'
+```
+
+Expected: `{"predictions": [<temperature °C>]}`. The workspace UI also has a
+built-in **Query endpoint** playground on the endpoint page.

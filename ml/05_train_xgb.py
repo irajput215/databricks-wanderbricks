@@ -27,9 +27,12 @@ def parse_args():
 
 
 def load_features(catalog: str, schema: str) -> pd.DataFrame:
+    # station identity is dropped for the skeleton (one global model); a
+    # station-aware model (encoded station or per-station training) is future
+    # work. Must match what 06_score.py drops for serving.
     return (
         spark.table(f"{catalog}.{schema}.weather_features")
-        .drop("date")            # temporal order is encoded in the features
+        .drop("date", "station")
         .toPandas()
         .dropna()
     )

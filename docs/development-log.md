@@ -71,3 +71,14 @@ gold-features explorer (nulls + correlation + plots), and a quick-forecast lab
 imported into the workspace at
 `/Users/iraonfridays@gmail.com/wanderbricks/notebooks/` for direct interactive
 use. Committed `9a92d...` (see git log).
+
+### 09 · Monitoring, pipeline-flow visibility, and serving-test wiring
+Captain asked how to monitor inference/prediction time, see the pipeline flow,
+and test the serving model. Wired: `06_score.py` now times scoring and logs
+`inference_seconds` to MLflow + a `scoring_metrics` Delta table; fixed a latent
+bug in `05_train_xgb.py` (string `station` column would break XGBoost — dropped
+from features); added `resources/wanderbricks_serving.endpoint.yml.example`
+(ready-to-enable, skipped by the bundle glob until a model version exists);
+added `notebooks/04_test_serving.ipynb` (imported to the workspace); README
+Part 4 documents the job/DLT run DAGs, CLI run commands, latency surfaces, the
+Datadog integration, and curl/notebook serving tests.

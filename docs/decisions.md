@@ -129,3 +129,31 @@ decision → why**. The timeline of what happened is in
   painful to open in the UI. Git = source of truth + reviewable; workspace
   import = one command to refresh the interactive copies. Table names are
   parameterized through widgets so the same notebooks work across dev/prod.
+
+## D12 · Monitoring and serving-test strategy
+
+- **Date:** 2026-08-30
+- **Context:** Captain wanted inference/prediction-time visibility, pipeline
+  flow visibility, and a way to test the serving model.
+- **Decision:** three complementary surfaces — (1) Databricks' built-in run
+  DAGs (job + DLT UIs and CLI runs) for the flow; (2) explicit timing
+  instrumentation in the batch scoring task (`inference_seconds` to MLflow +
+  a `scoring_metrics` Delta table); (3) the serving endpoint's native latency
+  metrics (p50/p95/p99) for real-time, with the endpoint resource kept as an
+  `.example` until a model version exists, plus a test notebook and curl path.
+- **Why:** use the platform's native observability before adding tools; the
+  only thing missing natively was per-run inference timing, so that was the
+  one custom instrument. Datadog stays optional for org-wide dashboards rather
+  than required plumbing.
+
+## D13 · Station identity dropped from the ML features (skeleton)
+
+- **Date:** 2026-08-30
+- **Context:** `weather_features` carries a string `station` column; feeding it
+  to XGBoost would break training.
+- **Decision:** drop `station` (and `date`) from the training/serving feature
+  set in `05_train_xgb.py` and `06_score.py` — one global model for all
+  stations.
+- **Why:** the skeleton's first goal is a working end-to-end run. Station-aware
+  modeling (StringIndexer/one-hot, or per-station training) is a clear,
+  documented next step once the pipeline runs end to end.

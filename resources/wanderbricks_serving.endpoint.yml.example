@@ -1,0 +1,29 @@
+# Model Serving endpoint for Wanderbricks — READY TO ENABLE.
+#
+# This file is named *.endpoint.yml.example on purpose: the bundle's
+# `include: resources/*.yml` skips it, because deploy would fail while
+# `wanderbricks_weather_xgb` has no registered version yet.
+#
+# To enable after the first training run:
+#   1. git mv resources/wanderbricks_serving.endpoint.yml.example \
+#               resources/wanderbricks_serving.endpoint.yml
+#   2. databricks bundle deploy --target dev
+# Then test it (see README Part 4 + notebooks/04_test_serving):
+#   curl -X POST .../serving-endpoints/wanderbricks-weather-serve/invocations \
+#        -H "Authorization: Bearer $DATABRICKS_TOKEN" \
+#        -d '{"dataframe_records": [{"day_of_week":3,"day_of_year":200,"month":7,
+#             "is_weekend":0,"temp_lag_1":24.5,"temp_lag_7":22.1,"temp_lag_14":20.3,
+#             "temp_lag_28":18.7,"temp_rollmean_7":23.2,"temp_rollmean_14":22.4}]}'
+
+resources:
+  model_serving_endpoints:
+    wanderbricks_weather_serve:
+      name: wanderbricks-weather-serve
+      config:
+        served_entities:
+          - entity_name: ${var.catalog}.${var.schema}.wanderbricks_weather_xgb
+            entity_version: "1"
+            workload_size: Small
+            scale_to_zero_enabled: true
+        auto_capture_config:
+          enabled: false

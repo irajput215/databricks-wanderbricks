@@ -6,21 +6,6 @@ decision → why**. The timeline of what happened is in
 
 ---
 
-## D1 · Project direction: Databricks end-to-end forecasting
-
-- **Date:** 2026-08-30
-- **Context:** Captain wanted a real data + ML/AI engineering project using
-  agentic engineering, and chose Databricks. Wanted to learn DLT, data quality,
-  MLflow, orchestration, retraining.
-- **Options considered:** (a) build another agent-experience CLI in the AXI
-  family, (b) implement the earlier x-linkedin-agent, (c) a Databricks
-  end-to-end project.
-- **Decision:** (c) — Databricks forecasting.
-- **Why:** the AXI space is mature/crowded (a tool without a felt gap is a
-  trap); a Databricks project covers the exact technologies the captain wanted
-  to learn on a real platform with a real dataset, and time-series forecasting
-  is a bounded problem with clear success criteria (forecast error).
-
 ## D2 · Project location: `~/databricks-forecasting` (outside the fleet registry)
 
 - **Date:** 2026-08-30

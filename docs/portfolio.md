@@ -22,6 +22,8 @@ claim anything that is not here.
 | Notebooks | Run in the workspace **and** locally (Databricks Connect + SDK), dual-mode bootstrap |
 | Dashboard | Streamlit app hitting the live endpoint with real feature rows |
 | Inference monitoring | `scoring_metrics` Delta table + MLflow `inference_seconds` |
+| Model quality (XGBoost) | **RMSE 2.50 °C, MAE 1.78 °C** (MLflow-logged) |
+| Baseline quality (Prophet) | RMSE 11.57 °C, MAE 10.71 °C (~78% RMSE improvement) |
 
 ## Resume bullets
 

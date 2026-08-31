@@ -49,6 +49,22 @@ All deployed and runnable from the bundle: one DLT pipeline plus one daily job
 
 ---
 
+## Screenshots
+
+### Streamlit Frontend App
+![Streamlit App](docs/images/streamlit_app.png)
+
+### DLT Data Pipeline
+![DLT Pipeline](docs/images/DLT_pipeline.png)
+
+### Geospatial Map
+![Geospatial Map](docs/images/geospacial_map.png)
+
+### Model Monitoring
+![Model Monitoring](docs/images/model_monitoring.png)
+
+---
+
 ## Quickstart
 
 ### Prerequisites
@@ -213,6 +229,7 @@ databricks-forecasting/
 - **`docs/development-log.md`** — what happened, step by step.
 - **`docs/decisions.md`** — why every choice was made (D1–D17: serverless,
   triggered-vs-continuous, unit fixes, UC signatures/aliases, dev-name prefix…).
+- **`docs/production-challenges-and-interview-prep.md`** — comprehensive MLOps study guide for real-world scenarios and interview prep.
 
 ---
 

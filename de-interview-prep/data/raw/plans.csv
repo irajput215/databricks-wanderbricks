@@ -1,0 +1,6 @@
+plan_id,plan_name,plan_type,monthly_premium
+PL01,Gold PPO,PPO,620.0
+PL02,Silver HMO,HMO,410.0
+PL03,Bronze HDHP,HDHP,260.0
+PL04,Platinum PPO,PPO,810.0
+PL05,EPO Select,EPO,350.0

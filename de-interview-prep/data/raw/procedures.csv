@@ -1,0 +1,33 @@
+procedure_code,procedure_description,procedure_category,standard_fee,specialty
+99213,"Office visit, established patient, 15 min",E&M,150.0,Primary Care
+99214,"Office visit, established patient, 25 min",E&M,220.0,Primary Care
+99204,"Office visit, new patient",E&M,320.0,Primary Care
+99395,"Preventive medicine visit, adult",Preventive,280.0,Primary Care
+93000,"Electrocardiogram, routine ECG",Diagnostic,120.0,Cardiology
+93306,"Echocardiography, complete",Imaging,900.0,Cardiology
+93458,"Cardiac catheterization, left heart",Surgery,4200.0,Cardiology
+97110,"Therapeutic exercise, 15 min",Therapy,90.0,Physical Therapy
+97140,"Manual therapy techniques, 15 min",Therapy,85.0,Physical Therapy
+97530,"Therapeutic activities, 15 min",Therapy,95.0,Physical Therapy
+27447,Total knee arthroplasty,Surgery,18500.0,Orthopedics
+29881,Knee arthroscopy with meniscectomy,Surgery,6200.0,Orthopedics
+20610,"Arthrocentesis, major joint",Procedure,260.0,Orthopedics
+73721,"MRI, lower extremity joint",Imaging,1450.0,Radiology
+72148,"MRI, lumbar spine",Imaging,1600.0,Radiology
+71046,"Chest X-ray, 2 views",Imaging,180.0,Radiology
+74177,CT abdomen and pelvis with contrast,Imaging,1900.0,Radiology
+80053,Comprehensive metabolic panel,Lab,60.0,Primary Care
+85025,"Blood count, complete with differential",Lab,45.0,Primary Care
+83036,Hemoglobin A1c,Lab,55.0,Endocrinology
+96413,"Chemotherapy infusion, 1 hour",Oncology,3200.0,Oncology
+77385,Radiation treatment delivery,Oncology,2100.0,Oncology
+70551,"MRI, brain, without contrast",Imaging,1700.0,Neurology
+95810,"Polysomnography, sleep study",Diagnostic,2400.0,Neurology
+11102,Tangential biopsy of skin,Procedure,210.0,Dermatology
+45378,"Colonoscopy, diagnostic",Procedure,1500.0,Gastroenterology
+43239,Upper GI endoscopy with biopsy,Procedure,1250.0,Gastroenterology
+90834,"Psychotherapy, 45 min",Behavioral,180.0,Psychiatry
+90935,"Hemodialysis, single evaluation",Procedure,480.0,Nephrology
+94010,"Spirometry, complete",Diagnostic,140.0,Pulmonology
+59400,"Routine obstetric care, vaginal delivery",OB,3800.0,OB/GYN
+99284,"Emergency department visit, level 4",E&M,950.0,Emergency Medicine

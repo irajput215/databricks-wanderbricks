@@ -1,0 +1,16 @@
+# practice lab artefacts
+.venv/
+.uvcache/
+.jupyter/
+data/warehouse/*.duckdb
+data/scratch/
+data/bronze/
+data/silver/
+data/gold/
+data/quarantine/
+notebooks/_executed/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+spark-warehouse/
+notebooks/spark-warehouse/

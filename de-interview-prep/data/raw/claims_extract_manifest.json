@@ -1,0 +1,9 @@
+{
+  "source_system": "CLAIMS_API",
+  "extract_type": "paginated_rest_api",
+  "landing_path": "data/landing/api/claims_page_*.json",
+  "page_size": 500,
+  "watermark_column": "updated_at",
+  "snapshot_date": "2025-07-01",
+  "record_count_including_defects": 12061
+}

@@ -1,0 +1,221 @@
+provider_id,npi,provider_name,specialty,state,network_status,updated_at
+PRV0001,1370980010,Miller Clinic,Emergency Medicine,AZ,In-Network,2025-05-10 05:54:00
+PRV0002,1897339894,Rossi Clinic,Primary Care,GA,In-Network,2025-04-03 08:04:00
+PRV0003,1389380471,Haddad Medical Group,Pulmonology,NC,In-Network,2025-04-09 11:11:00
+PRV0004,1801974197,Davis Health Partners,Physical Therapy,NY,In-Network,2025-05-15 01:17:00
+PRV0005,1818844692,Ramirez Clinic,Endocrinology,TX,In-Network,2025-05-16 11:32:00
+PRV0006,1474493367,Haddad Medical Group,Primary Care,TX,In-Network,2025-02-16 22:54:00
+PRV0007,1066055413,Clark Health Partners,Oncology,CA,In-Network,2025-05-01 03:41:00
+PRV0008,1059071503,Kim Clinic,Physical Therapy,CO,Out-of-Network,2025-03-12 00:02:00
+PRV0009,1260078553,White Associates,Radiology,CA,In-Network,2025-05-01 12:31:00
+PRV0010,1528172617,Novak Care Center,Orthopedics,CA,In-Network,2025-06-19 19:01:00
+PRV0011,1761365156,Hernandez Clinic,Cardiology,WA,In-Network,2025-06-27 13:36:00
+PRV0012,1609274870,Sanchez Care Center,Primary Care,WA,In-Network,2025-06-15 07:19:00
+PRV0013,1587238245,Davis Medical Group,Primary Care,GA,In-Network,2025-04-21 19:11:00
+PRV0014,1926392008,Williams Health Partners,Nephrology,MI,In-Network,2025-05-01 05:08:00
+PRV0015,1848884487,Miller Health Partners,Pulmonology,NY,In-Network,2025-04-18 18:58:00
+PRV0016,1864344559,Rodriguez Associates,Nephrology,IL,In-Network,2025-01-24 19:46:00
+PRV0017,1351073753,Johnson Care Center,Physical Therapy,NY,In-Network,2025-01-28 10:44:00
+PRV0018,1202445507,Okafor Associates,Neurology,NJ,Out-of-Network,2025-03-24 19:45:00
+PRV0019,1007803409,Patel Medical Group,Oncology,IL,In-Network,2025-05-05 12:57:00
+PRV0020,1700456720,Miller Health Partners,Psychiatry,MA,Out-of-Network,2025-05-05 13:04:00
+PRV0021,1594767168,Clark Clinic,Gastroenterology,NY,In-Network,2025-05-06 13:39:00
+PRV0022,1091140526,Chen Associates,Nephrology,GA,In-Network,2025-05-04 19:56:00
+PRV0023,1267950786,Lewis Clinic,Pulmonology,NJ,In-Network,2025-05-05 21:28:00
+PRV0024,1261413302,Brown Clinic,Endocrinology,CA,In-Network,2025-03-02 12:42:00
+PRV0025,1133553589,Gonzalez Medical Group,Psychiatry,NY,In-Network,2025-06-16 10:39:00
+PRV0026,1973028967,Martin Clinic,Psychiatry,IL,In-Network,2025-06-22 23:43:00
+PRV0027,1606338164,Rodriguez Health Partners,Cardiology,CO,In-Network,2025-01-11 11:20:00
+PRV0028,1804354611,Clark Care Center,Oncology,PA,In-Network,2025-03-22 18:11:00
+PRV0029,1997551110,Ramirez Medical Group,Oncology,MO,In-Network,2025-01-31 07:38:00
+PRV0030,1296441767,Jones Medical Group,Psychiatry,MI,In-Network,2025-04-13 05:07:00
+PRV0031,1587780801,Rodriguez Clinic,Endocrinology,TX,In-Network,2025-04-16 09:02:00
+PRV0032,1520622631,Clark Health Partners,Endocrinology,FL,In-Network,2025-05-23 10:31:00
+PRV0033,1779267271,Wilson Associates,Emergency Medicine,PA,In-Network,2025-05-19 06:58:00
+PRV0034,1326634585,Jackson Health Partners,Orthopedics,IL,In-Network,2025-01-17 18:22:00
+PRV0035,1447338889,Ramirez Clinic,Emergency Medicine,IL,Out-of-Network,2025-01-29 17:30:00
+PRV0036,1769887802,Novak Medical Group,Physical Therapy,WA,Out-of-Network,2025-06-07 13:26:00
+PRV0037,1131283624,Harris Associates,Nephrology,CA,In-Network,2025-03-21 23:36:00
+PRV0038,1437507998,Williams Clinic,Nephrology,OH,In-Network,2025-01-29 14:48:00
+PRV0039,1470723854,Lee Care Center,Radiology,IL,In-Network,2025-05-30 21:01:00
+PRV0040,1089787394,Miller Clinic,Oncology,IN,In-Network,2025-03-28 08:39:00
+PRV0041,1192155824,Novak Care Center,Orthopedics,FL,In-Network,2025-01-02 14:48:00
+PRV0042,1230930095,Ali Care Center,Primary Care,IL,In-Network,2025-04-30 18:00:00
+PRV0043,1347206161,Rodriguez Care Center,Physical Therapy,GA,In-Network,2025-05-27 17:59:00
+PRV0044,1556606522,White Clinic,Endocrinology,NY,In-Network,2025-04-19 23:58:00
+PRV0045,1528335657,Lee Health Partners,Neurology,PA,In-Network,2025-05-06 10:43:00
+PRV0046,1759422627,Smith Medical Group,Cardiology,FL,In-Network,2025-01-14 09:28:00
+PRV0047,1003521908,Hernandez Health Partners,Cardiology,TX,In-Network,2025-01-16 12:13:00
+PRV0048,1838069937,Jones Health Partners,Psychiatry,NJ,In-Network,2025-01-10 11:14:00
+PRV0049,1684472379,Thompson Medical Group,OB/GYN,AZ,In-Network,2025-02-28 20:55:00
+PRV0050,1624174716,Haddad Associates,Gastroenterology,IN,In-Network,2025-01-20 20:33:00
+PRV0051,1801367636,Chen Clinic,Nephrology,TX,In-Network,2025-06-09 17:43:00
+PRV0052,1534847498,Davis Clinic,Orthopedics,GA,In-Network,2025-05-09 20:38:00
+PRV0053,1625965329,Haddad Clinic,Oncology,FL,Out-of-Network,2025-04-30 02:04:00
+PRV0054,1201517914,Williams Care Center,Gastroenterology,CA,In-Network,2025-01-19 02:31:00
+PRV0055,1618755671,Sanchez Associates,Neurology,CA,In-Network,2025-04-18 17:26:00
+PRV0056,1580825232,Harris Medical Group,Neurology,IL,Out-of-Network,2025-04-03 02:33:00
+PRV0057,1064748161,Wilson Medical Group,Physical Therapy,GA,In-Network,2025-04-16 20:28:00
+PRV0058,1454739282,Miller Associates,Nephrology,VA,In-Network,2025-06-20 03:19:00
+PRV0059,1615030574,Williams Health Partners,Endocrinology,VA,In-Network,2025-05-10 21:50:00
+PRV0060,1232331937,Davis Care Center,OB/GYN,FL,In-Network,2025-06-22 20:17:00
+PRV0061,1069706145,Brown Associates,Dermatology,NY,In-Network,2025-05-25 03:56:00
+PRV0062,1994941129,Haddad Clinic,OB/GYN,OH,In-Network,2025-05-10 08:15:00
+PRV0063,1884211943,Martin Medical Group,Psychiatry,FL,In-Network,2025-05-18 15:48:00
+PRV0064,1540322492,Wilson Care Center,Radiology,NJ,In-Network,2025-02-27 09:36:00
+PRV0065,1587793662,Wilson Care Center,Oncology,VA,In-Network,2025-04-08 20:50:00
+PRV0066,1608113552,Rodriguez Associates,OB/GYN,FL,In-Network,2025-02-23 09:59:00
+PRV0067,1254022086,Anderson Medical Group,Neurology,TX,In-Network,2025-05-11 11:01:00
+PRV0068,1156496962,Lopez Health Partners,Physical Therapy,NJ,In-Network,2025-01-03 11:39:00
+PRV0069,1109131313,Lee Health Partners,Orthopedics,MD,In-Network,2025-04-11 05:48:00
+PRV0070,1533000633,Miller Associates,Emergency Medicine,IL,In-Network,2025-02-21 22:50:00
+PRV0071,1075181303,Johnson Associates,Nephrology,IL,In-Network,2025-02-10 01:53:00
+PRV0072,1632699706,Thompson Associates,Neurology,IL,In-Network,2025-01-27 15:16:00
+PRV0073,1004008936,Gonzalez Associates,Pulmonology,OH,In-Network,2025-06-26 13:37:00
+PRV0074,1383745567,Okafor Associates,Gastroenterology,TX,In-Network,2025-02-18 10:16:00
+PRV0075,1770049437,Lopez Medical Group,Radiology,NJ,In-Network,2025-04-11 22:02:00
+PRV0076,1622695346,Ali Care Center,Radiology,IL,Out-of-Network,2025-06-24 08:48:00
+PRV0077,1446767735,Silva Associates,Nephrology,OH,In-Network,2025-02-04 07:15:00
+PRV0078,1468541697,Thompson Medical Group,Psychiatry,IN,In-Network,2025-02-03 05:01:00
+PRV0079,1747889228,Taylor Health Partners,Dermatology,NY,Out-of-Network,2025-01-11 15:19:00
+PRV0080,1144080613,Smith Clinic,Neurology,IL,In-Network,2025-04-08 22:30:00
+PRV0081,1545947766,Rodriguez Clinic,Primary Care,FL,In-Network,2025-06-06 04:18:00
+PRV0082,1049228637,Harris Care Center,Dermatology,NC,In-Network,2025-06-06 09:01:00
+PRV0083,1343475254,Williams Care Center,Oncology,NY,In-Network,2025-04-06 16:46:00
+PRV0084,1739090551,Johnson Health Partners,Nephrology,IL,In-Network,2025-06-01 09:38:00
+PRV0085,1361819947,Rodriguez Associates,Primary Care,PA,In-Network,2025-06-14 07:14:00
+PRV0086,1237385748,Lopez Associates,Nephrology,MI,In-Network,2025-06-20 00:28:00
+PRV0087,1323162881,Silva Associates,Pulmonology,TX,Out-of-Network,2025-04-16 11:56:00
+PRV0088,1953364189,Silva Care Center,Physical Therapy,MI,In-Network,2025-02-27 04:38:00
+PRV0089,1617010296,Rossi Care Center,OB/GYN,GA,In-Network,2025-04-04 13:59:00
+PRV0090,1716676297,Martin Care Center,Gastroenterology,NY,In-Network,2025-06-18 12:24:00
+PRV0091,1298765221,Rodriguez Associates,Nephrology,CA,In-Network,2025-04-20 14:31:00
+PRV0092,1909011271,Garcia Care Center,Dermatology,WA,In-Network,2025-04-30 11:41:00
+PRV0093,1993710597,Rossi Clinic,Neurology,OH,In-Network,2025-04-19 00:37:00
+PRV0094,1016712968,White Medical Group,Emergency Medicine,WA,In-Network,2025-01-16 07:41:00
+PRV0095,1707534252,Silva Associates,Cardiology,NY,In-Network,2025-04-03 23:13:00
+PRV0096,1865945050,Lewis Clinic,Pulmonology,CA,In-Network,2025-01-05 12:23:00
+PRV0097,1453116550,Rossi Health Partners,Radiology,PA,In-Network,2025-02-11 08:15:00
+PRV0098,1797594876,Martin Associates,Cardiology,TX,In-Network,2025-04-14 08:33:00
+PRV0099,1814832726,Moore Medical Group,OB/GYN,TX,In-Network,2025-06-11 09:47:00
+PRV0100,1535335201,Ramirez Clinic,Neurology,FL,Out-of-Network,2025-03-26 13:19:00
+PRV0101,1217301417,Haddad Health Partners,OB/GYN,FL,In-Network,2025-02-03 16:52:00
+PRV0102,1361843466,Williams Clinic,Oncology,FL,In-Network,2025-05-14 20:44:00
+PRV0103,1941434584,Lopez Care Center,Orthopedics,CA,Out-of-Network,2025-05-09 00:33:00
+PRV0104,1618849103,Clark Care Center,Nephrology,CA,In-Network,2025-05-24 14:52:00
+PRV0105,1556649221,Lewis Associates,Primary Care,TX,Out-of-Network,2025-02-07 00:35:00
+PRV0106,1606080576,Silva Clinic,Endocrinology,NY,In-Network,2025-04-23 10:15:00
+PRV0107,1925568773,Jackson Associates,Primary Care,CA,In-Network,2025-02-04 01:05:00
+PRV0108,1486098271,Kim Care Center,Primary Care,NY,Out-of-Network,2025-02-19 21:34:00
+PRV0109,1993106864,Thomas Medical Group,Cardiology,CA,In-Network,2025-06-21 11:50:00
+PRV0110,1843716985,Moore Medical Group,Endocrinology,VA,In-Network,2025-06-18 23:51:00
+PRV0111,1161953317,Chen Associates,Emergency Medicine,WA,In-Network,2025-06-18 20:26:00
+PRV0112,1235907671,Lewis Medical Group,Gastroenterology,CA,In-Network,2025-05-06 01:19:00
+PRV0113,1546276672,Jackson Health Partners,Oncology,FL,In-Network,2025-06-16 10:39:00
+PRV0114,1732598121,Thomas Associates,Cardiology,MO,In-Network,2025-05-20 04:10:00
+PRV0115,1862658092,Jackson Care Center,Physical Therapy,MA,Out-of-Network,2025-03-06 10:23:00
+PRV0116,1609850263,Smith Medical Group,Physical Therapy,AZ,Out-of-Network,2025-06-26 20:01:00
+PRV0117,1486975525,Martin Clinic,OB/GYN,CO,In-Network,2025-01-06 12:54:00
+PRV0118,1840130462,Perez Associates,Gastroenterology,IL,Out-of-Network,2025-05-24 07:35:00
+PRV0119,1414577490,Harris Associates,Nephrology,CA,In-Network,2025-03-19 19:05:00
+PRV0120,1615085885,Kim Clinic,Cardiology,TX,Out-of-Network,2025-04-29 06:34:00
+PRV0121,1287570986,Martinez Medical Group,Nephrology,GA,In-Network,2025-02-17 06:40:00
+PRV0122,1322652882,Martin Health Partners,Orthopedics,CA,In-Network,2025-01-22 03:52:00
+PRV0123,1119857626,Patel Associates,Dermatology,PA,In-Network,2025-05-26 21:12:00
+PRV0124,1524874242,Martin Health Partners,Gastroenterology,IL,Out-of-Network,2025-05-11 04:36:00
+PRV0125,1613747204,Anderson Medical Group,Orthopedics,NY,In-Network,2025-06-19 01:23:00
+PRV0126,1390526123,Lee Associates,OB/GYN,NJ,In-Network,2025-02-24 21:39:00
+PRV0127,1624433834,Clark Health Partners,Cardiology,GA,In-Network,2025-01-18 11:09:00
+PRV0128,1728604918,Miller Care Center,Psychiatry,OH,In-Network,2025-03-18 23:42:00
+PRV0129,1227821319,Johnson Associates,Neurology,MI,In-Network,2025-06-01 19:03:00
+PRV0130,1894180772,Wilson Care Center,Physical Therapy,NY,Out-of-Network,2025-04-20 15:28:00
+PRV0131,1261134775,Rodriguez Clinic,Primary Care,CA,In-Network,2025-01-14 08:22:00
+PRV0132,1043018753,Moore Associates,Endocrinology,IL,In-Network,2025-03-18 21:54:00
+PRV0133,1225647984,Miller Health Partners,Physical Therapy,CO,In-Network,2025-06-27 09:09:00
+PRV0134,1013615809,Smith Care Center,Psychiatry,CA,In-Network,2025-05-15 05:01:00
+PRV0135,1978087242,Taylor Health Partners,Endocrinology,IL,Out-of-Network,2025-01-07 13:12:00
+PRV0136,1785642554,Chen Associates,Psychiatry,TX,Out-of-Network,2025-06-26 03:30:00
+PRV0137,1484563988,Rodriguez Associates,Emergency Medicine,WA,In-Network,2025-01-22 22:08:00
+PRV0138,1106252347,Moore Care Center,Physical Therapy,TX,Out-of-Network,2025-03-19 07:36:00
+PRV0139,1080827155,Miller Clinic,Pulmonology,PA,In-Network,2025-01-24 04:06:00
+PRV0140,1027810712,Jackson Associates,Neurology,NY,In-Network,2025-03-13 21:53:00
+PRV0141,1692237635,Perez Associates,Radiology,MA,In-Network,2025-02-13 22:36:00
+PRV0142,1494869367,Lopez Clinic,Gastroenterology,IN,In-Network,2025-02-09 02:26:00
+PRV0143,1068832281,Wilson Medical Group,Endocrinology,CA,Out-of-Network,2025-03-26 05:58:00
+PRV0144,1416327548,Martin Care Center,Pulmonology,NC,In-Network,2025-05-30 08:08:00
+PRV0145,1714189069,Smith Care Center,Cardiology,NY,In-Network,2025-01-05 10:06:00
+PRV0146,1063589531,Haddad Clinic,Pulmonology,MD,In-Network,2025-03-14 19:08:00
+PRV0147,1366030654,Smith Medical Group,Dermatology,CA,In-Network,2025-03-02 11:24:00
+PRV0148,1706911022,Thomas Health Partners,Primary Care,FL,In-Network,2025-03-09 19:49:00
+PRV0149,1664726122,Harris Clinic,Endocrinology,OH,In-Network,2025-03-06 06:05:00
+PRV0150,1864452829,Taylor Associates,Oncology,IN,In-Network,2025-01-21 10:32:00
+PRV0151,1400762290,Miller Health Partners,Orthopedics,IL,In-Network,2025-03-23 15:50:00
+PRV0152,1838044233,Kim Medical Group,OB/GYN,MO,In-Network,2025-05-21 00:50:00
+PRV0153,1323039257,Gonzalez Medical Group,Emergency Medicine,TX,In-Network,2025-06-22 12:32:00
+PRV0154,1512698044,Chen Medical Group,Neurology,CA,Out-of-Network,2025-04-18 11:04:00
+PRV0155,1960114696,Patel Health Partners,OB/GYN,IL,In-Network,2025-02-21 05:09:00
+PRV0156,1506419791,Nguyen Care Center,Neurology,CA,In-Network,2025-02-28 07:06:00
+PRV0157,1902130387,Kim Care Center,Nephrology,TX,In-Network,2025-01-07 19:58:00
+PRV0158,1860624227,Davis Associates,Dermatology,NY,In-Network,2025-06-29 03:38:00
+PRV0159,1262214945,Williams Associates,Radiology,OH,Out-of-Network,2025-06-10 19:38:00
+PRV0160,1812703145,Kim Medical Group,Neurology,FL,In-Network,2025-02-23 01:29:00
+PRV0161,1861880186,Robinson Medical Group,Emergency Medicine,NJ,In-Network,2025-04-20 07:53:00
+PRV0162,1865190147,Garcia Clinic,Radiology,TX,In-Network,2025-01-04 14:11:00
+PRV0163,1520842196,Robinson Medical Group,Neurology,CA,Out-of-Network,2025-05-26 00:31:00
+PRV0164,1617175656,Nguyen Medical Group,Orthopedics,NY,Out-of-Network,2025-01-25 20:04:00
+PRV0165,1054395125,Smith Care Center,Dermatology,MO,In-Network,2025-02-19 21:08:00
+PRV0166,1718990437,Sanchez Associates,Radiology,FL,Out-of-Network,2025-05-12 05:00:00
+PRV0167,1516065184,Garcia Health Partners,OB/GYN,CA,In-Network,2025-03-18 21:14:00
+PRV0168,1744666647,Lee Care Center,Dermatology,WA,In-Network,2025-01-26 18:22:00
+PRV0169,1345443002,Kim Medical Group,Gastroenterology,PA,Out-of-Network,2025-01-27 00:23:00
+PRV0170,1723909339,Martinez Associates,Dermatology,CA,In-Network,2025-06-22 19:04:00
+PRV0171,1390078829,Kim Clinic,Physical Therapy,CA,Out-of-Network,2025-02-02 12:38:00
+PRV0172,1393786531,Smith Medical Group,Physical Therapy,OH,In-Network,2025-05-12 05:04:00
+PRV0173,1235898467,Martin Clinic,Oncology,IL,In-Network,2025-01-12 10:33:00
+PRV0174,1241033880,Brown Medical Group,Dermatology,TN,In-Network,2025-02-24 01:31:00
+PRV0175,1770025626,Gonzalez Clinic,Oncology,IL,In-Network,2025-05-18 08:42:00
+PRV0176,1089629851,Lopez Medical Group,Psychiatry,TX,In-Network,2025-03-20 02:54:00
+PRV0177,1364203163,Wilson Care Center,Neurology,CA,Out-of-Network,2025-05-30 07:54:00
+PRV0178,1625123829,Chen Health Partners,Orthopedics,TX,In-Network,2025-06-16 01:41:00
+PRV0179,1079852603,Clark Health Partners,Endocrinology,MA,In-Network,2025-06-21 17:58:00
+PRV0180,1642833561,Anderson Care Center,Oncology,NY,In-Network,2025-05-21 16:26:00
+PRV0181,1701378825,Jones Associates,Physical Therapy,FL,Out-of-Network,2025-04-29 15:53:00
+PRV0182,1365870640,Ali Associates,Emergency Medicine,IL,In-Network,2025-05-20 18:42:00
+PRV0183,1190504240,Lewis Medical Group,Nephrology,CA,In-Network,2025-02-18 09:52:00
+PRV0184,1911064683,Martinez Associates,Dermatology,FL,In-Network,2025-02-06 09:52:00
+PRV0185,1840510051,Okafor Health Partners,Emergency Medicine,NJ,In-Network,2025-01-16 03:03:00
+PRV0186,1280676062,Smith Associates,Endocrinology,NY,In-Network,2025-03-25 19:34:00
+PRV0187,1735552222,Patel Care Center,Radiology,NY,In-Network,2025-06-12 08:53:00
+PRV0188,1188780038,Lee Medical Group,Gastroenterology,FL,In-Network,2025-05-10 10:57:00
+PRV0189,1141516992,Ramirez Care Center,Endocrinology,MD,In-Network,2025-01-30 20:32:00
+PRV0190,1909340940,Clark Clinic,Primary Care,IL,In-Network,2025-04-05 11:40:00
+PRV0191,1470454000,Johnson Associates,Neurology,OH,In-Network,2025-04-22 02:36:00
+PRV0192,1877834522,Moore Medical Group,Psychiatry,CA,In-Network,2025-06-06 11:55:00
+PRV0193,1065328887,Wilson Medical Group,Cardiology,IN,In-Network,2025-06-12 13:29:00
+PRV0194,1453439197,Brown Medical Group,Radiology,CO,Out-of-Network,2025-05-19 18:26:00
+PRV0195,1186950338,Chen Medical Group,Dermatology,TX,Out-of-Network,2025-06-21 20:18:00
+PRV0196,1819472494,Rossi Health Partners,OB/GYN,NC,In-Network,2025-03-08 18:06:00
+PRV0197,1896014977,Chen Health Partners,Endocrinology,NY,In-Network,2025-01-29 07:49:00
+PRV0198,1811352384,Harris Health Partners,OB/GYN,WA,In-Network,2025-01-02 20:32:00
+PRV0199,1536186641,Harris Associates,Radiology,CA,In-Network,2025-02-15 11:17:00
+PRV0200,1870070660,Jackson Clinic,Nephrology,TX,In-Network,2025-03-08 10:32:00
+PRV0201,1948788212,Garcia Associates,Oncology,MI,In-Network,2025-01-10 08:10:00
+PRV0202,1518561679,Okafor Medical Group,Radiology,CA,In-Network,2025-03-19 09:16:00
+PRV0203,1122059944,Novak Care Center,Nephrology,NJ,In-Network,2025-02-28 02:07:00
+PRV0204,1166293035,Robinson Associates,Oncology,AZ,In-Network,2025-03-23 19:28:00
+PRV0205,1104130187,Thomas Health Partners,Nephrology,TX,In-Network,2025-04-04 09:11:00
+PRV0206,1097939292,Ali Associates,Oncology,FL,In-Network,2025-06-06 06:29:00
+PRV0207,1508836981,Miller Care Center,Oncology,PA,In-Network,2025-04-13 21:34:00
+PRV0208,1908015217,Silva Medical Group,Emergency Medicine,TX,In-Network,2025-05-23 20:14:00
+PRV0209,1270277260,Anderson Medical Group,Nephrology,CO,In-Network,2025-01-04 12:16:00
+PRV0210,1979808887,Miller Medical Group,Physical Therapy,VA,In-Network,2025-02-28 15:59:00
+PRV0211,1285107522,Smith Health Partners,Primary Care,IL,In-Network,2025-03-04 08:07:00
+PRV0212,1139950164,Williams Medical Group,Neurology,MA,Out-of-Network,2025-01-11 00:59:00
+PRV0213,1347349610,Williams Health Partners,Oncology,CA,Out-of-Network,2025-06-14 02:44:00
+PRV0214,1539339186,Rodriguez Medical Group,OB/GYN,OH,Out-of-Network,2025-06-17 01:27:00
+PRV0215,1329643717,Thompson Health Partners,OB/GYN,NY,In-Network,2025-03-10 13:07:00
+PRV0216,1070304292,Miller Care Center,OB/GYN,GA,In-Network,2025-01-16 00:10:00
+PRV0217,1027082579,Chen Associates,OB/GYN,FL,In-Network,2025-04-01 16:43:00
+PRV0218,1753608920,Lopez Clinic,Primary Care,CA,In-Network,2025-03-14 17:26:00
+PRV0219,1632726093,Martinez Care Center,Radiology,MD,In-Network,2025-02-14 10:32:00
+PRV0220,1242498376,Ramirez Associates,Nephrology,GA,In-Network,2025-03-27 21:50:00

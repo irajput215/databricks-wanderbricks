@@ -1,0 +1,31 @@
+diagnosis_code,diagnosis_description,diagnosis_category
+E11.9,Type 2 diabetes without complications,Endocrine
+I10,Essential hypertension,Circulatory
+M17.11,Unilateral osteoarthritis of right knee,Musculoskeletal
+M54.5,Low back pain,Musculoskeletal
+J45.909,"Unspecified asthma, uncomplicated",Respiratory
+K21.9,Gastro-esophageal reflux disease,Digestive
+F32.9,"Major depressive disorder, single episode",Mental
+N18.3,"Chronic kidney disease, stage 3",Genitourinary
+E78.5,Hyperlipidemia,Endocrine
+I25.10,Atherosclerotic heart disease,Circulatory
+C50.911,Malignant neoplasm of right female breast,Neoplasm
+C34.90,Malignant neoplasm of lung,Neoplasm
+Z00.00,General adult medical examination,Preventive
+S83.511,Sprain of anterior cruciate ligament,Injury
+J06.9,Acute upper respiratory infection,Respiratory
+R07.9,"Chest pain, unspecified",Symptoms
+G47.33,Obstructive sleep apnea,Nervous
+L20.9,Atopic dermatitis,Skin
+K57.30,Diverticulosis of large intestine,Digestive
+O80,Encounter for full-term uncomplicated delivery,Pregnancy
+M79.671,Pain in right foot,Musculoskeletal
+E66.9,"Obesity, unspecified",Endocrine
+I48.91,Unspecified atrial fibrillation,Circulatory
+J18.9,"Pneumonia, unspecified organism",Respiratory
+N39.0,Urinary tract infection,Genitourinary
+F41.1,Generalized anxiety disorder,Mental
+G43.909,"Migraine, unspecified",Nervous
+H25.11,"Age-related nuclear cataract, right eye",Sensory
+M25.511,Pain in right shoulder,Musculoskeletal
+Z79.899,Long term drug therapy,Preventive

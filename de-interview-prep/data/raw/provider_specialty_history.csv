@@ -1,0 +1,61 @@
+provider_id,specialty,effective_start,effective_end,is_current,change_reason
+PRV0006,Nephrology,2022-01-01,2024-07-04,false,Credentialing update
+PRV0006,Primary Care,2024-07-05,,true,Credentialing update
+PRV0009,Oncology,2022-01-01,2024-12-31,false,Credentialing update
+PRV0009,Radiology,2025-01-01,,true,Credentialing update
+PRV0013,Endocrinology,2022-01-01,2025-01-26,false,Credentialing update
+PRV0013,Primary Care,2025-01-27,,true,Credentialing update
+PRV0022,Cardiology,2022-01-01,2024-10-15,false,Credentialing update
+PRV0022,Nephrology,2024-10-16,,true,Credentialing update
+PRV0023,Emergency Medicine,2022-01-01,2025-01-06,false,Credentialing update
+PRV0023,Pulmonology,2025-01-07,,true,Credentialing update
+PRV0031,Nephrology,2022-01-01,2024-10-30,false,Credentialing update
+PRV0031,Endocrinology,2024-10-31,,true,Credentialing update
+PRV0042,Radiology,2022-01-01,2024-03-20,false,Credentialing update
+PRV0042,Primary Care,2024-03-21,,true,Credentialing update
+PRV0049,Oncology,2022-01-01,2024-06-19,false,Credentialing update
+PRV0049,OB/GYN,2024-06-20,,true,Credentialing update
+PRV0051,Cardiology,2022-01-01,2024-05-18,false,Credentialing update
+PRV0051,Nephrology,2024-05-19,,true,Credentialing update
+PRV0066,Gastroenterology,2022-01-01,2025-01-05,false,Credentialing update
+PRV0066,OB/GYN,2025-01-06,,true,Credentialing update
+PRV0073,Emergency Medicine,2022-01-01,2024-06-22,false,Credentialing update
+PRV0073,Pulmonology,2024-06-23,,true,Credentialing update
+PRV0086,Physical Therapy,2022-01-01,2024-03-02,false,Credentialing update
+PRV0086,Nephrology,2024-03-03,,true,Credentialing update
+PRV0089,Cardiology,2022-01-01,2024-11-19,false,Credentialing update
+PRV0089,OB/GYN,2024-11-20,,true,Credentialing update
+PRV0095,Gastroenterology,2022-01-01,2025-02-03,false,Credentialing update
+PRV0095,Cardiology,2025-02-04,,true,Credentialing update
+PRV0097,Nephrology,2022-01-01,2025-01-16,false,Credentialing update
+PRV0097,Radiology,2025-01-17,,true,Credentialing update
+PRV0108,Dermatology,2022-01-01,2024-04-30,false,Credentialing update
+PRV0108,Primary Care,2024-05-01,,true,Credentialing update
+PRV0116,Endocrinology,2022-01-01,2024-06-06,false,Credentialing update
+PRV0116,Physical Therapy,2024-06-07,,true,Credentialing update
+PRV0136,OB/GYN,2022-01-01,2024-12-23,false,Credentialing update
+PRV0136,Psychiatry,2024-12-24,,true,Credentialing update
+PRV0145,Neurology,2022-01-01,2024-07-06,false,Credentialing update
+PRV0145,Cardiology,2024-07-07,,true,Credentialing update
+PRV0147,Emergency Medicine,2022-01-01,2024-11-24,false,Credentialing update
+PRV0147,Dermatology,2024-11-25,,true,Credentialing update
+PRV0158,Orthopedics,2022-01-01,2024-08-17,false,Credentialing update
+PRV0158,Dermatology,2024-08-18,,true,Credentialing update
+PRV0169,Neurology,2022-01-01,2024-04-17,false,Credentialing update
+PRV0169,Gastroenterology,2024-04-18,,true,Credentialing update
+PRV0174,Oncology,2022-01-01,2024-11-29,false,Credentialing update
+PRV0174,Dermatology,2024-11-30,,true,Credentialing update
+PRV0177,Nephrology,2022-01-01,2024-11-30,false,Credentialing update
+PRV0177,Neurology,2024-12-01,,true,Credentialing update
+PRV0178,Oncology,2022-01-01,2024-04-01,false,Credentialing update
+PRV0178,Orthopedics,2024-04-02,,true,Credentialing update
+PRV0192,Endocrinology,2022-01-01,2024-08-27,false,Credentialing update
+PRV0192,Psychiatry,2024-08-28,,true,Credentialing update
+PRV0199,Physical Therapy,2022-01-01,2024-10-08,false,Credentialing update
+PRV0199,Radiology,2024-10-09,,true,Credentialing update
+PRV0203,Cardiology,2022-01-01,2024-07-05,false,Credentialing update
+PRV0203,Nephrology,2024-07-06,,true,Credentialing update
+PRV0206,Emergency Medicine,2022-01-01,2024-07-30,false,Credentialing update
+PRV0206,Oncology,2024-07-31,,true,Credentialing update
+PRV0216,Neurology,2022-01-01,2024-05-20,false,Credentialing update
+PRV0216,OB/GYN,2024-05-21,,true,Credentialing update

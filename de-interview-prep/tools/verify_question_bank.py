@@ -37,7 +37,7 @@ import sys
 import traceback
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SPEC = ROOT / "notebooks" / "_build" / "15_interview_question_bank.py"
+SPEC = ROOT / "notebooks" / "_build" / "17_interview_question_bank.py"
 
 SCALARS = {
     "INT": int,

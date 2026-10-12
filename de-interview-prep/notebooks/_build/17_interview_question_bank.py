@@ -14,7 +14,7 @@ Verify before/after editing:
 The QUESTIONS block between the two markers is generated from data/scratch/qbank/part*.json
 by tools/_merge_qbank_parts.py - keep it sorted by `n` and keep the markers intact.
 """
-TITLE = "15 - Interview Question Bank (40 drills: DuckDB SQL + PySpark)"
+TITLE = "17 - Interview Question Bank (40 drills: DuckDB SQL + PySpark)"
 PREAMBLE = False  # this notebook brings its own, Spark-tolerant preamble
 
 # --------------------------------------------------------------------------- questions

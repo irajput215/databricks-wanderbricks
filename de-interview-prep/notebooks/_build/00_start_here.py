@@ -20,8 +20,10 @@ a messy source layer, an ingestion pipeline, a data-quality scorecard and a deli
 | 11 gaps & islands | the 3 patterns: sequential values, status changes, gaps |
 | 12 stored procedures | Anatomy, idempotent batch reloads, transactions, dynamic SQL, legacy migration |
 | 13 pipeline monitoring | The 9 essential metrics: record count, nulls, duplicates, lag, drift, quarantine, reconciliation, job state, latency |
-| 14 troubleshooting | Incident playbook: fan-out, PySpark data skew salting, poison pills, non-idempotent replays, forensic hops |
-| 15 interview question bank | 40 interview drills, each answered twice: DuckDB SQL + PySpark |
+| 15 e2e pipeline | End-to-end architecture & the 11 operational scenarios: API failures, dedupe, schema drift, idempotency, backfill, retries |
+| 16 data governance | Unity Catalog: 3-level namespace, RBAC, Row Filters, Column Masks, Lineage, System Tables, Delta Sharing |
+| 17 interview question bank | 40 interview drills, each answered twice: DuckDB SQL + PySpark |
+| case_studies/01 healthcare claims | Case Study: Medallion, Fan-Out, Reconciliation ( variance), SQL/PySpark, 3 TB Optimization, Databricks Workflows |
 
 Every notebook runs top-to-bottom. `q("SQL")` is the only function you need."""),
     ("md", """### The layers

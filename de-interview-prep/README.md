@@ -5,7 +5,7 @@ A small but realistic claims warehouse + a messy source layer, so you practise t
 
 - **11,981 claims** across 18 months (2024-01 → 2025-06), 1,200 members, 220 providers, 38,592 service lines, 11,465 payments
 - 50 SQL drills (grain → joins → grain traps → windows → KPIs → DE problems) in 6 notebooks
-- **40 interview drills** (notebook 15): property rental, defect rates, MAU retention, gaps and islands,
+- **40 interview drills** (notebook 17): property rental, defect rates, MAU retention, gaps and islands,
   top-N per group, regex … each one answered **twice** — DuckDB SQL via `q('''SELECT ...''')` and PySpark
   via `spark.table(...)` — on the same toy tables, and the two answers are checked to agree
 - 2 PySpark notebooks, 1 ingestion notebook, 1 data-quality investigation notebook, 1 gaps-and-islands notebook
@@ -44,7 +44,7 @@ Copy the solution's `assert_grain(...)` call onto your own result — it fails l
 ```
 src/          generate_sources.py  build_warehouse.py  dq_checks.py  de_helpers.py  fake_api.py  paths.py
 data/         raw/ landing/ (messy sources)  bronze/ silver/ gold/ (parquet)  warehouse/healthcare.duckdb
-notebooks/    00-15 drills (.ipynb)   _build/ (the python specs they are generated from)
+notebooks/    00-17 drills (.ipynb)   _build/ (the python specs they are generated from)
 tools/        bootstrap.sh  build_notebooks.py  run_notebooks.py  verify_project.py  verify_question_bank.py
 sql/          gold_kpis.sql (Q46-Q48 reference)  q49_investigation.sql (stage-by-stage investigation)
 SCHEMA.md     tables, grain, keys, and the 14 deliberate source defects
@@ -93,9 +93,9 @@ con.sql("SELECT status, COUNT(*) FROM claims GROUP BY 1").df()
 
 `notebooks/_build/*.py` is the source of truth for the notebooks; edit a spec and rebuild rather than editing `.ipynb` by hand.
 
-## Notebook 15 - the interview question bank
+## Notebook 17 - the interview question bank
 
-`notebooks/15_interview_question_bank.ipynb` holds 40 interview-style questions (20 Hard, 20 Medium).
+`notebooks/17_interview_question_bank.ipynb` holds 40 interview-style questions (20 Hard, 20 Medium).
 Each question creates its own tiny tables **in both engines** and is solved twice:
 
 ```python

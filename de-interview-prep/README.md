@@ -5,6 +5,9 @@ A small but realistic claims warehouse + a messy source layer, so you practise t
 
 - **11,981 claims** across 18 months (2024-01 → 2025-06), 1,200 members, 220 providers, 38,592 service lines, 11,465 payments
 - 50 SQL drills (grain → joins → grain traps → windows → KPIs → DE problems) in 6 notebooks
+- **40 interview drills** (notebook 17): property rental, defect rates, MAU retention, gaps and islands,
+  top-N per group, regex … each one answered **twice** — DuckDB SQL via `q('''SELECT ...''')` and PySpark
+  via `spark.table(...)` — on the same toy tables, and the two answers are checked to agree
 - 2 PySpark notebooks, 1 ingestion notebook, 1 data-quality investigation notebook, 1 gaps-and-islands notebook
 - **One deliberately broken dashboard**: it reports **+40%** claim growth for Apr-2025; the source says **+5%**. Notebook 10 makes you find out why.
 
@@ -41,8 +44,8 @@ Copy the solution's `assert_grain(...)` call onto your own result — it fails l
 ```
 src/          generate_sources.py  build_warehouse.py  dq_checks.py  de_helpers.py  fake_api.py  paths.py
 data/         raw/ landing/ (messy sources)  bronze/ silver/ gold/ (parquet)  warehouse/healthcare.duckdb
-notebooks/    00-11 drills (.ipynb)   _build/ (the python specs they are generated from)
-tools/        bootstrap.sh  build_notebooks.py  run_notebooks.py  verify_project.py
+notebooks/    00-17 drills (.ipynb)   _build/ (the python specs they are generated from)
+tools/        bootstrap.sh  build_notebooks.py  run_notebooks.py  verify_project.py  verify_question_bank.py
 sql/          gold_kpis.sql (Q46-Q48 reference)  q49_investigation.sql (stage-by-stage investigation)
 SCHEMA.md     tables, grain, keys, and the 14 deliberate source defects
 ```
@@ -89,6 +92,25 @@ con.sql("SELECT status, COUNT(*) FROM claims GROUP BY 1").df()
 ```
 
 `notebooks/_build/*.py` is the source of truth for the notebooks; edit a spec and rebuild rather than editing `.ipynb` by hand.
+
+## Notebook 17 - the interview question bank
+
+`notebooks/17_interview_question_bank.ipynb` holds 40 interview-style questions (20 Hard, 20 Medium).
+Each question creates its own tiny tables **in both engines** and is solved twice:
+
+```python
+df = q('''SELECT ...''')                     # DuckDB
+result = spark.table("q07_inventory")...     # PySpark, DataFrame API
+```
+
+`tools/verify_question_bank.py` runs every SQL solution against DuckDB and every PySpark solution
+against a real local Spark, then asserts both return the same columns and the same rows:
+
+```bash
+uv venv data/scratch/qbank-venv --python 3.12
+uv pip install --python data/scratch/qbank-venv/bin/python "pyspark==4.0.0" duckdb pandas pyarrow
+JAVA_HOME=$(/usr/libexec/java_home -v 21) data/scratch/qbank-venv/bin/python tools/verify_question_bank.py
+```
 
 ## Running on Databricks (Serverless & Unity Catalog)
 

@@ -1,0 +1,264 @@
+PROFESSIONAL SUMMARY Senior Data Engineer and Analytics professional with 5+ years of experience delivering end-to-end data solutions across financial services, logistics, FMCG, and government sectors. Strong technical depth across data engineering, analytics, business intelligence, and data governance — with hands-on expertise in Python, PySpark, SQL, Snowflake, Azure Databricks, Microsoft Fabric, DBT, Apache Airflow, and Power BI. Proven ability to design and build scalable data pipelines, develop trusted data models and semantic layers, deliver Power BI dashboards and reporting solutions, validate data quality, and translate complex business requirements into practical data solutions. Experienced engaging with senior stakeholders, communicating technical concepts clearly to non-technical audiences, and leading small analytics teams. Currently working as a Data Engineer at the Queensland Audit Office. TECHNICAL EXPERTISE Python • PySpark & Spark • SQL (Advanced, Optimisation, Stored Procedures) • Snowflake • Azure Databricks • Microsoft Fabric (Lakehouse, Notebooks, Pipelines, OneLake) • Azure Data Factory (ADF) • Azure Synapse Analytics • GCP (BigQuery, Pub/Sub, Cloud Composer) • AWS (S3, EC2) • DBT (Data Build Tool) • Apache Airflow • Power BI (Dashboards, DAX, Power Query, Semantic Models, RLS) • Data Modelling (Star Schema / Kimball / Medallion) • Data Quality, Governance & Validation Frameworks • ETL / ELT Pipeline Design & Delivery • Data Ingestion & Transformation • Stakeholder Engagement & Requirements Translation • CI/CD (GitHub Actions, Azure DevOps) • Terraform (IaC) • Git / GitHub • Advanced Excel • JIRA (Agile) • Technical Documentation WORK EXPERIENCE Data Engineer Queensland Audit Office (QAO) — Brisbane, QLD Jul 2026 – Present Delivering data engineering solutions within QAO's enterprise Microsoft Fabric data platform — building scalable ingestion and transformation pipelines, implementing data quality and governance controls, and supporting analytics and reporting capabilities across Queensland government audit functions. • Building and maintaining scalable data ingestion and transformation pipelines using Microsoft Fabric Spark Notebooks and PySpark — processing enterprise data across Bronze/Silver/Gold Lakehouse layers for analytics and audit reporting workloads. • Implementing data quality, governance and privacy controls — including automated validation checks, reconciliation frameworks, and documentation standards that ensure data integrity across all platform outputs. • Collaborating with architects, analysts and business stakeholders — translating reporting and analytical requirements into practical data engineering solutions aligned to enterprise governance standards. • Contributing to engineering standards, reusable patterns and continuous improvement — establishing best practices in version control, CI/CD and documentation that elevate team delivery quality. Data Solutions Analyst Liberty Mutual Insurance — Mumbai, India Jun 2024 – Apr 2026 Led data engineering, analytics and reporting delivery across a large-scale regulated financial services organisation — designing ETL pipelines, building Power BI reporting solutions, developing data models, validating data quality, and translating complex business requirements into trusted data products for Finance, Actuarial and Operations stakeholders. • Designed and built ETL/ELT data pipelines integrating data from multiple enterprise source systems and external APIs — delivering trusted, accurate datasets that supported reporting, analytics and operational decision-making. • Developed and maintained Power BI dashboards and reports using DAX and Power Query — building KPI frameworks, performance measures and data visualisations adopted as the organisation's primary governance and performance reporting tool. • Built and managed semantic models with authoritative DAX measures, consistent metric definitions and RowLevel Security — ensuring all stakeholders accessed trusted, appropriately governed data through a single semantic layer.• Validated data quality, accuracy, completeness and consistency — implementing systematic reconciliation frameworks, anomaly detection and data quality monitoring that ensured reliable analytics outputs across the platform. • Developed analytical models and decision-support reporting — translating actuarial, claims and financial data into trend analysis, risk identification and forward-looking insights for senior leadership. • Engaged with business stakeholders across Finance, Actuarial and Operations — gathering requirements, translating complex technical concepts into plain language, and presenting analytical findings to both technical and non-technical audiences. • Mentored and developed junior analysts — establishing engineering standards, reviewing outputs and building team capability in SQL, Power BI and data quality practices. Data Engineer FedEx — Mumbai, India May 2023 – May 2024 Delivered enterprise data engineering and analytics solutions across Microsoft Fabric and Azure Databricks — building large-scale data pipelines, governing Lakehouse architecture, developing Power BI reporting, and partnering with business and technical stakeholders across international logistics operations. • Built and maintained scalable ETL/ELT pipelines using Azure Data Factory and Databricks — integrating data from multiple enterprise source systems across a global logistics network. • Designed and governed Databricks Lakehouse architecture including Unity Catalog — implementing medallion Bronze/Silver/Gold layers, Delta Lake standards, access controls and data lineage tracking. • Developed Power BI dashboards and performance reporting — providing operational and commercial teams with timely, trusted performance insights across channels, regions and product categories. • Applied CI/CD practices via Azure DevOps — implementing structured branching, code reviews and YAML pipeline configurations for controlled, auditable deployments. Data Engineer Colgate-Palmolive — Mumbai, India Feb 2022 – May 2023 Owned the enterprise Snowflake data warehouse end-to-end — designing data models, building DBT transformation pipelines, implementing data governance frameworks, delivering Power BI analytics, and achieving a 70% improvement in platform performance through architectural redesign. • Designed and implemented a Snowflake enterprise data warehouse using Kimball Star Schema dimensional modelling — structuring data from 10+ independent source systems for high-performance analytics and reporting consumption. • Built and maintained ETL/ELT pipelines using DBT and Apache Airflow — delivering scalable, automated data ingestion and transformation with embedded data quality checks and governance controls. • Developed Power BI dashboards, semantic models and analytical tools — enabling commercial and supply chain stakeholders to access trusted, self-service analytics independently. • Provisioned cloud infrastructure using Terraform IaC and implemented CI/CD via GitHub Actions — achieving a 70% improvement in platform performance and reporting efficiency.
+
+\documentclass[a4paper,20pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.530in}
+\addtolength{\evensidemargin}{-0.375in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.45in}
+\addtolength{\textheight}{1in}
+
+\urlstyle{rm}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-10pt}\scshape\raggedright\Large
+}{}{0em}{}[\color{black}\titlerule \vspace{-6pt}]
+
+%-------------------------
+% Custom commands
+
+% \newcommand{\item}[2]{
+%   \item\small{
+%     \textbf{#1}{: #2 \vspace{-2pt}}
+%   }
+% }
+
+\newcommand{\itemWithoutTitle}[1]{
+  \item\small{
+    {\vspace{-2pt}}
+  }
+}
+
+\newcommand{\projectHeading}[2]{
+  \vspace{6pt}
+  \textbf{\large #1} \hfill { #2} \\[-2pt]
+}
+
+\newcommand{\resumeSubItem}[2]{\item{#1}{#2}\vspace{-3pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\itemListStart}{\begin{itemize}}
+\newcommand{\itemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\newcommand{\subHeading}[3]{
+  \vspace{6pt}
+  \textbf{\large #1} {\;\textbar{}\; \normalsize \textbf{#2}} \hfill {#3} \\[-2pt]
+}
+
+\setlist[itemize]{
+  label=\raisebox{0.25ex}{\scriptsize$\bullet$},
+  leftmargin=10pt,
+  labelsep=6pt,
+  itemindent=0pt,
+  listparindent=0pt,
+  parsep=0pt,
+  topsep=2pt,
+  itemsep=5pt
+}
+
+\begin{document}
+
+%----------HEADING-----------------
+
+\begin{center}
+    {\huge \textbf{Ishu Rajput}}\\[4pt]
+    \vspace{3pt}
+    Sydney, Australia\;\textbar{}\;
+    \href{mailto:eshurajput007@gmail.com}{eshurajput007@gmail.com}
+    \;\textbar{}\;
+    +61-478036737
+    \;\textbar{}\;
+    \href{https://linkedin.com/in/rajputishu}{linkedin.com/in/rajputishu}
+    \;\textbar{}\;
+    \href{https://github.com/irajput215}{github.com/irajput215}
+\end{center}
+
+%----------CAREER SUMMARY-----------------
+
+\vspace{4pt}
+\section{Summary}
+\vspace{4pt}
+Data Engineer with industry experience building reliable data solutions for large-scale business operations. Delivered measurable improvements in processing efficiency, data quality, and operational workflows.
+
+
+
+%----------SKILLS-----------------
+
+\section{Skills}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+
+\textbf{Languages:} & Python, SQL, Shell/Linux, TypeScript, C, C++ \\
+\textbf{Data Engineering:} &  Databricks, dbt, Spark, PySpark, Snowflake, PostgreSQL, Delta Lake, ETL/ELT, medallion architecture, dimensional modelling, data quality, reconciliation \\
+\textbf{Infrastructure:} & AWS, Git, GitHub Actions, CI/CD, Docker\\
+
+\textbf{Backend \& AI:} & FastAPI, REST APIs, LangGraph, Langsmith, LiteLLM, Claude SDK  \\
+
+
+\end{tabularx}
+
+\vspace{2pt}
+
+%----------EXPERIENCE-----------------
+
+\section{Experience}
+% \vspace{1pt}
+
+\subHeading
+  {Associate Data Engineer III}
+  {Carelon Global Solutions, India}
+  {Oct 2022 -- April 2023}
+
+% \vspace{6pt}
+% \textit{\normalsize Healthcare Claims Data Platform \& Performance Engineering}
+
+\begin{itemize}
+
+\item Architected a \textbf{3TB healthcare claims workload} on \textbf{Databricks}, designing data processing and partitioning strategies for parallel execution across the cluster, reducing pipeline runtime from \textbf{8 hours to 27 minutes}. 
+% at approximately \textbf{1.9 GB/s} aggregate read throughput.
+
+% \item Collaborated with \textbf{Data Scientists and Analytics teams} to translate modelling requirements into reusable \textbf{feature datasets}.
+\item Building and maintaining scalable data ingestion and transformation pipelines — processing enterprise data across Bronze/Silver/Gold Lakehouse layers for analytics and audit reporting workloads.
+\item Implementing data quality, governance and privacy controls — including automated validation checks, reconciliation frameworks, and documentation standards that ensure data integrity across all platform outputs. 
+\item Collaborating with architects, analysts and business stakeholders — translating reporting and analytical requirements into practical data engineering solutions aligned to enterprise governance standards. 
+\item Contributing to engineering standards, reusable patterns and continuous improvement — establishing best practices in version control, CI/CD and documentation that elevate team delivery quality.
+% \item Migrated curated claims datasets to \textbf{Delta Lake}, applying file compaction, column statistics and incremental \textbf{MERGE} operations to reduce the overall batch processing window.
+
+\end{itemize}
+
+
+\subHeading
+  {Associate Data Engineer II}
+  {Carelon Global Solutions, India}
+  {Dec 2021 -- Sep 2022}
+
+% \vspace{6pt}
+% \textit{\normalsize CRM ingestion, Orchestration \& Data Quality}
+
+\begin{itemize}
+
+\item Build an ingestion pipeline onto \textbf{AWS S3} with distributed \textbf{PySpark} on Databricks, optimizing incremental processing, column pruning, and Parquet-based storage across a layered \textbf{medallion} architecture, reducing processing time by \textbf{55\%}.
+
+\item Built automated \textbf{data quality controls} across the pipeline, including explicit PySpark \texttt{StructType} schemas and quarantine tables for invalid records, reducing manual clinical review time by \textbf{35\%}.
+
+% \item Redesigned workflow dependencies and orchestration to reduce processing time by a further \textbf{35\%}, accelerating claims and member-outcome reporting for downstream business teams.
+
+\item Designed idempotent claims writes using partition-aware overwrites and \textbf{MERGE} operations, enabling safe retries without duplicating financial records and improving reliability of recurring claims processing.
+
+\item Worked with \textbf{business and data teams} to translate claims-reporting requirements into consistent metric definitions for \textbf{claim counts, paid amounts and reconciliation exceptions}, embedding the agreed rules into automated SQL/Python data-quality checks before data reached downstream reports.
+
+\end{itemize}
+
+
+\subHeading
+  {Associate Data Engineer I}
+  {Carelon Global Solutions, India}
+  {June 2021 -- Nov 2021}
+
+% \vspace{6pt}
+% \textit{\normalsize CRM Ingestion, Orchestration \& Data Quality}
+
+\begin{itemize}
+
+
+\item Built automated \textbf{SQL reconciliation controls} to validate record counts, missing claim IDs, catching data discrepancies before downstream reporting.
+
+\item Designed and implemented a \textbf{versioned ICD code ingestion and search workflow} using Python(beautifulSoup, requests, cURL, FastAPI) and \textbf{AWS S3}, automating collection and delivery of official code releases to downstream healthcare systems and reducing manual data-update overhead.
+
+\end{itemize}
+
+
+%----------PROJECTS-----------------
+% \newpage
+\section{Projects}
+% \vspace{3pt}
+\subHeading{Zomato AI Data Platform}{\href{https://github.com/irajput215/zomato-ai-data-platform}{\faGithub}}
+{}
+\vspace{0.3em}
+\emph{Snowflake, dbt, Airflow, AWS S3, LiteLLM, Streamlit, Docker, GitHub Actions}
+
+\begin{itemize}
+
+\item{Architected an end-to-end Medallion pipeline from \textbf{AWS S3} to \textbf{Snowflake}, modeling clean staging layers and Gold data marts to analyze \textbf{10M+ records} with sub-second latency.}
+    \item{Engineered \textbf{dbt} incremental models (\texttt{merge}) and \textbf{SCD Type 2 snapshots} to preserve restaurant rating histories while generating end-to-end \textbf{data lineage and documentation}.}
+    \item{Automated daily batch workflows using \textbf{Apache Airflow} (Docker) and built \textbf{GitHub Actions CI/CD} pipelines with a \textbf{Makefile} to enforce automated code validation and seamless deployments.}
+    \item{Delivered a \textbf{Streamlit} self-service application featuring operational KPI dashboards, RAG review search, and \textbf{LiteLLM Text-to-SQL} natural-language querying over warehouse marts.}
+
+\end{itemize}
+% \newpage
+\subHeading
+{Agentic Data Pipeline Incident-Response Platform}{\href{https://github.com/irajput215/incident-response-agent}{\faGithub}}
+{}
+\vspace{0.3em}
+\emph{Python, LangGraph, LangSmith, PostgreSQL, LiteLLM, FastAPI}
+
+\begin{itemize}
+    \item{Built an AI assistant using \textbf{LangGraph} that automatically investigates failed data pipelines (like Spark crashes and missing files), finding the root cause in under 20 seconds.}
+    
+    \item{Equipped the agent with \textbf{9 diagnostic tools} to inspect error logs, trace upstream pipeline dependencies, and check warehouse tables to pinpoint failures.}
+    
+    \item{Protected database tables with \textbf{sqlglot} to strictly enforce read-only queries—preventing accidental data deletion—and required human sign-off before applying any fix.}
+    
+    \item{Tracked the AI's step-by-step reasoning with \textbf{LangSmith}, monitoring tool performance, execution latency, and LLM token costs for easy debugging.}
+\end{itemize}
+
+
+
+
+
+%----------EDUCATION-----------------
+
+% \vspace{4pt}
+\section{Education}
+\vspace{4pt}
+
+\textbf{University of New South Wales, Sydney} \hfill Sep 2024 -- Sep 2026 \\
+{Master of Information Technology} \hfill \textit{WAM: 81/100} \\[6pt]
+
+\textbf{Indian Institute of Technology, Kanpur, India} \hfill June 2017 -- May 2021 \\
+{Bachelor of Technology} \hfill \textit{CGPA: 7.2/10}
+
+
+%----------ACHIEVEMENTS-----------------
+
+\vspace{4pt}
+\section{Achievements}
+\vspace{4pt}
+Award for Academic Excellence, University of New South Wales (2026) \\[3pt]
+2nd Place - UNSW Health Datathon (2025) \\[3pt]
+National top 0.1\% in JEE Main and top 0.5\% in JEE Advanced
+
+
+
+\end{document}
+

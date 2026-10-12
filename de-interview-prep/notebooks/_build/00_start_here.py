@@ -18,6 +18,10 @@ a messy source layer, an ingestion pipeline, a data-quality scorecard and a deli
 | 09 ingestion | paginated API, retries/backoff, validation, dead-letter, idempotency |
 | 10 data quality | DQ checks, quarantine, reconciliation, root-cause investigation |
 | 11 gaps & islands | the 3 patterns: sequential values, status changes, gaps |
+| 12 stored procedures | Anatomy, idempotent batch reloads, transactions, dynamic SQL, legacy migration |
+| 13 pipeline monitoring | The 9 essential metrics: record count, nulls, duplicates, lag, drift, quarantine, reconciliation, job state, latency |
+| 14 troubleshooting | Incident playbook: fan-out, PySpark data skew salting, poison pills, non-idempotent replays, forensic hops |
+| 15 interview question bank | 40 interview drills, each answered twice: DuckDB SQL + PySpark |
 
 Every notebook runs top-to-bottom. `q("SQL")` is the only function you need."""),
     ("md", """### The layers

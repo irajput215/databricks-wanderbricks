@@ -1,0 +1,18 @@
+# Pipeline 2 of 2: drone imagery branch (independent of farm conditions).
+# Reads flight upload manifests only. The CV model itself is out of scope for
+# this demo; this branch shows the separation: if it fails, Pipeline 1 still
+# delivers today's conditions to the app.
+resources:
+  pipelines:
+    leher_imagery:
+      name: leher-imagery
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      serverless: true
+      continuous: false
+      root_path: "../pipelines"
+      configuration:
+        leher.raw_path: /Volumes/${var.catalog}/${var.schema}/raw
+      libraries:
+        - glob:
+            include: ../pipelines/imagery/**

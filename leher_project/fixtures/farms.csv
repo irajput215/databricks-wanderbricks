@@ -1,0 +1,6 @@
+farm_id,farmer_name,crop,district,state,lat,lon,area_ha,soil_type,registered_on,updated_at
+F001,Rangaiah Gowda,tomato,Bengaluru Urban,Karnataka,12.9716,77.5946,4.2,red_loam,2023-07-12,2026-10-15 06:00:00
+F002,Venkat Reddy,cotton,Rangareddy,Telangana,17.3850,78.4867,6.8,black_cotton,2023-08-03,2026-10-15 06:00:00
+F003,Murugan S,banana,Coimbatore,Tamil Nadu,11.0168,76.9558,3.1,red_sandy_loam,2023-09-21,2026-10-15 06:00:00
+F004,Sunil Patil,grapes,Nashik,Maharashtra,19.9975,73.7898,5.5,black,2023-10-05,2026-10-15 06:00:00
+F005,Gurpreet Singh,wheat,Ludhiana,Punjab,30.9010,75.8573,8.0,alluvial,2023-11-18,2026-10-15 06:00:00

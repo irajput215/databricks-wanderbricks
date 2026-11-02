@@ -1,0 +1,53 @@
+# One daily Workflow, two independent branches after a shared ingest task.
+#
+#   ingest_apis ──┬── farm_conditions   (pipeline 1: weather/drought/satellite/farms)
+#                 └── imagery_quality   (pipeline 2: drone flight manifests)
+#
+# A failure in the imagery branch never blocks the farm-conditions branch, which
+# is what guarantees the farmer still gets today's field conditions.
+resources:
+  jobs:
+    leher_daily:
+      name: leher-daily
+      schedule:
+        # ~5 AM India time. The ingest task dates the run to "today" in IST and
+        # the gold layer falls back to yesterday's values when a source lags.
+        quartz_cron_expression: "0 0 5 * * ?"
+        timezone_id: Asia/Kolkata
+        pause_status: UNPAUSED
+
+      environments:
+        - environment_key: ingest_env
+          spec:
+            environment_version: "4"
+            dependencies:
+              - requests
+
+      tasks:
+        - task_key: ingest_apis
+          environment_key: ingest_env
+          spark_python_task:
+            python_file: ../scripts/ingest.py
+            parameters:
+              - "--out"
+              - "/Volumes/${var.catalog}/${var.schema}/raw"
+              - "--farms"
+              # fixtures/farms.csv is synced with the bundle; in production this
+              # argument would be the app database's farm-registry export.
+              - "${workspace.file_path}/fixtures/farms.csv"
+
+        - task_key: farm_conditions
+          depends_on:
+            - task_key: ingest_apis
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.leher_farm_conditions.id}
+
+        - task_key: imagery_quality
+          depends_on:
+            - task_key: ingest_apis
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.leher_imagery.id}
+
+      # In production the backend teams copy gold_farm_daily to PostgreSQL after
+      # pipeline 1 (20 lines of spark.read.table(...).write.jdbc(...)). Kept out
+      # of the demo so it needs no external database.

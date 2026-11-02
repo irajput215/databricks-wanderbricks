@@ -1,0 +1,38 @@
+# Declarative Automation Bundle (Databricks Asset Bundle) for the Leher demo.
+#
+#   raw APIs -> UC Volume -> 2 Spark Declarative Pipelines -> gold tables
+#
+# Deploy (Free Edition defaults: catalog "workspace"):
+#   databricks auth login --host https://<workspace-url>
+#   databricks schemas create leher_demo workspace
+#   databricks volumes create workspace leher_demo raw MANAGED
+#   databricks bundle deploy -t dev
+#   databricks bundle run leher_daily -t dev
+#
+# See README.md ("Run it on Databricks") for the full walkthrough.
+bundle:
+  name: leher-demo
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog that owns the demo tables + raw volume.
+  schema:
+    description: Schema (database) that owns the demo tables + raw volume.
+
+targets:
+  dev:
+    # Development mode prefixes deployed resource names with your user name and
+    # pauses schedules, so a deploy cannot collide with anyone else's demo.
+    mode: development
+    default: true
+    variables:
+      catalog: workspace
+      schema: leher_demo
+  prod:
+    mode: production
+    variables:
+      catalog: workspace
+      schema: leher_demo

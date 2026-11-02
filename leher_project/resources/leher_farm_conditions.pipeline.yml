@@ -1,0 +1,22 @@
+# Pipeline 1 of 2: daily farm conditions.
+#   raw volume -> bronze_* (Auto Loader) -> silver_* + quarantine -> gold_farm_daily
+#
+# Same layer contract as the local DuckDB mirror (scripts/build_model.py) and
+# docs/DATA_MODEL.md.
+resources:
+  pipelines:
+    leher_farm_conditions:
+      name: leher-farm-conditions
+      catalog: ${var.catalog}
+      schema: ${var.schema}
+      # Triggered (not continuous): each job run spins serverless compute up,
+      # processes the morning's files and shuts down. Farmers read the app once
+      # a day, so a schedule is cheaper than streaming.
+      serverless: true
+      continuous: false
+      root_path: "../pipelines"
+      configuration:
+        leher.raw_path: /Volumes/${var.catalog}/${var.schema}/raw
+      libraries:
+        - glob:
+            include: ../pipelines/farm_conditions/**

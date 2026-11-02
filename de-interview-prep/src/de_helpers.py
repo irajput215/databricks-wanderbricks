@@ -136,11 +136,14 @@ _w = None
 def get_dbutils(profile: str = "irajput"):
     """Get Databricks dbutils object using authenticated Databricks CLI profile."""
     global _w
-    from databricks.sdk import WorkspaceClient
+    try:
+        from databricks.sdk import WorkspaceClient
 
-    if _w is None:
-        _w = WorkspaceClient(profile=profile)
-    return _w.dbutils
+        if _w is None:
+            _w = WorkspaceClient(profile=profile)
+        return _w.dbutils
+    except Exception as e:
+        return None
 
 
 def fs_ls(path: str = "/Volumes/workspace/iraonfridays/de_prep/silver") -> pd.DataFrame:
@@ -232,24 +235,29 @@ def get_spark(
             use_databricks = False
 
     if use_databricks:
-        from databricks.connect import DatabricksSession
-
-        builder = DatabricksSession.builder
-        profile_name = profile or os.environ.get("DATABRICKS_CONFIG_PROFILE", "irajput")
-        builder = builder.profile(profile_name)
-
-        if cluster_id:
-            builder = builder.clusterId(cluster_id)
-        else:
-            builder = builder.serverless()
-
-        _spark = builder.getOrCreate()
         try:
-            _spark.sql(f"USE CATALOG {catalog}")
-            _spark.sql(f"USE SCHEMA {schema}")
-        except Exception:
-            pass
-        return _spark
+            from databricks.connect import DatabricksSession
+
+            builder = DatabricksSession.builder
+            profile_name = profile or os.environ.get("DATABRICKS_CONFIG_PROFILE", "irajput")
+            builder = builder.profile(profile_name)
+
+            if cluster_id:
+                builder = builder.clusterId(cluster_id)
+            else:
+                builder = builder.serverless()
+
+            _spark = builder.getOrCreate()
+            try:
+                _spark.sql(f"USE CATALOG {catalog}")
+                _spark.sql(f"USE SCHEMA {schema}")
+            except Exception:
+                pass
+            return _spark
+        except Exception as e:
+            print(f"[de_helpers] Databricks Connect session unavailable ({e}).")
+            print("To authenticate with your Databricks Lakehouse: run 'databricks auth login --profile irajput'.")
+            return None
 
     from pyspark.sql import SparkSession
 
